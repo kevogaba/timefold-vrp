@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: timefold-vrp
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,modulith
+  endpoint:
+    health:
+      show-details: when-authorized
+  otlp:
+    tracing:
+      endpoint: ${OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:http://localhost:4318/v1/traces}
+    metrics:
+      export:
+        url: ${OTEL_EXPORTER_OTLP_METRICS_ENDPOINT:http://localhost:4318/v1/metrics}
+  tracing:
+    sampling:
+      probability: ${OTEL_TRACES_SAMPLER_ARG:0.1}
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  structured:
+    format:
+      console: logstash
+  pattern:
+    correlation: "[${spring.application.name},%X{traceId:-},%X{spanId:-}]"
+
+sentry:
+  dsn: ${SENTRY_DSN:}
+  traces-sample-rate: 0.2
+  environment: ${SPRING_PROFILES_ACTIVE:local}
+  release: "@project.version@"
+  send-default-pii: false
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+timefold:
+  solver:
+    termination:
+      spent-limit: 30s
+    solver-config-override:
+      move-thread-count: AUTO
