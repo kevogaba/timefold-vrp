@@ -30,9 +30,11 @@ class OrderMapper {
                     price = lineItem.price
                 )
             },
-            pickupLocation = if (entity.pickupLat != null && entity.pickupLon != null) {
-                Location(entity.pickupLat, entity.pickupLon)
-            } else null,
+            pickupLocation = entity.pickupLat?.let { lat ->
+                entity.pickupLon?.let { lon ->
+                    Location(lat, lon)
+                }
+            },
             deliveryLocation = Location(entity.deliveryLat, entity.deliveryLon),
             timeWindowStart = entity.timeWindowStart,
             timeWindowEnd = entity.timeWindowEnd,

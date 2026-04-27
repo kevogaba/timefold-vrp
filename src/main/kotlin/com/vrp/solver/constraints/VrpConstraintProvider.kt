@@ -1,6 +1,6 @@
 package com.vrp.solver.constraints
 
-import ai.timefold.solver.core.api.score.buildin.hardsoft.HardSoftScore
+import ai.timefold.solver.core.api.score.HardSoftScore
 import ai.timefold.solver.core.api.score.stream.Constraint
 import ai.timefold.solver.core.api.score.stream.ConstraintFactory
 import ai.timefold.solver.core.api.score.stream.ConstraintProvider
@@ -63,10 +63,11 @@ class VrpConstraintProvider : ConstraintProvider {
      */
     private fun timeWindowViolation(constraintFactory: ConstraintFactory): Constraint {
         return constraintFactory.forEach(SolverVehicle::class.java)
-            .flattenLast { it.visits }
-            .filter { vehicle, visit ->
-                val arrivalTime = calculateArrivalTime(vehicle, visit)
-                arrivalTime.isBefore(visit.timeWindowStart) || arrivalTime.isAfter(visit.timeWindowEnd)
+            .filter { vehicle ->
+                vehicle.visits.any { visit ->
+                    val arrivalTime = calculateArrivalTime(vehicle, visit)
+                    arrivalTime.isBefore(visit.timeWindowStart) || arrivalTime.isAfter(visit.timeWindowEnd)
+                }
             }
             .penalize(HardSoftScore.ONE_HARD)
             .asConstraint("timeWindowViolation")
@@ -101,8 +102,8 @@ class VrpConstraintProvider : ConstraintProvider {
      */
     private fun minimizeTotalDistance(constraintFactory: ConstraintFactory): Constraint {
         return constraintFactory.forEach(SolverVehicle::class.java)
-            .penalizeLong(HardSoftScore.ONE_SOFT) { vehicle ->
-                calculateTotalDistance(vehicle)
+            .penalize(HardSoftScore.ONE_SOFT) { vehicle ->
+                calculateTotalDistance(vehicle).toInt().toLong()
             }
             .asConstraint("minimizeTotalDistance")
     }
@@ -112,13 +113,13 @@ class VrpConstraintProvider : ConstraintProvider {
      */
     private fun balanceLoad(constraintFactory: ConstraintFactory): Constraint {
         return constraintFactory.forEach(SolverVehicle::class.java)
-            .penalizeLong(HardSoftScore.ONE_SOFT) { vehicle ->
+            .penalize(HardSoftScore.ONE_SOFT) { vehicle ->
                 val utilizationPercent = if (vehicle.weightCapacity > BigDecimal.ZERO) {
                     val totalWeight = vehicle.visits.sumOf { it.demandWeight }
-                    ((totalWeight / vehicle.weightCapacity) * BigDecimal(100)).toLong()
-                } else 0L
+                    ((totalWeight / vehicle.weightCapacity) * BigDecimal(100)).toInt()
+                } else 0
                 // Penalize deviation from 80% utilization (optimal target)
-                Math.abs(utilizationPercent - 80)
+                Math.abs(utilizationPercent - 80).toLong()
             }
             .asConstraint("balanceLoad")
     }

@@ -93,7 +93,6 @@ dependencies {
     // Testing
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.kotlin.test.junit5)
-    testImplementation(libs.timefold.solver.test)
     testImplementation(libs.temporal.testing)
     testImplementation(libs.spring.modulith.starter.test)
     testImplementation(libs.spring.cloud.starter.contract.verifier)

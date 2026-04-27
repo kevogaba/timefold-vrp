@@ -4,6 +4,7 @@ import com.vrp.domain.model.Order
 import com.vrp.domain.model.Vehicle
 import com.vrp.infrastructure.temporal.activity.*
 import io.temporal.activity.ActivityOptions
+import io.temporal.common.RetryOptions
 import io.temporal.workflow.Workflow
 import java.time.Duration
 
@@ -22,17 +23,21 @@ class VrpSolveWorkflowImpl : VrpSolveWorkflow {
     init {
         val defaultOptions = ActivityOptions.newBuilder()
             .setStartToCloseTimeout(Duration.ofMinutes(5))
-            .setRetryOptions {
-                it.setMaximumAttempts(3).build()
-            }
+            .setRetryOptions(
+                RetryOptions.newBuilder()
+                    .setMaximumAttempts(3)
+                    .build()
+            )
             .build()
 
         val solverOptions = ActivityOptions.newBuilder()
             .setStartToCloseTimeout(Duration.ofMinutes(10))
             .setHeartbeatTimeout(Duration.ofSeconds(30))
-            .setRetryOptions {
-                it.setMaximumAttempts(1).build()
-            }
+            .setRetryOptions(
+                RetryOptions.newBuilder()
+                    .setMaximumAttempts(1)
+                    .build()
+            )
             .build()
 
         fetchOrdersActivity = Workflow.newActivityStub(FetchOrdersActivity::class.java, defaultOptions)

@@ -51,25 +51,25 @@ class RunSolverActivityImpl(
         // Create solver problem
         val problem = mapper.toSolverSolution(jobId, orders, vehicles)
 
-        // Solve asynchronously
-        val latch = CountDownLatch(1)
-        var finalSolution = problem
+        // Start solving
+        solverService.solve(jobId, problem)
 
-        solverService.solve(jobId, problem) { solution ->
-            finalSolution = solution
-            latch.countDown()
+        // Poll for completion
+        while (solverService.getSolverStatus(jobId) != ai.timefold.solver.core.api.solver.SolverStatus.NOT_SOLVING) {
+            Thread.sleep(1000)
         }
 
-        // Wait for solution (with timeout)
-        latch.await(10, TimeUnit.MINUTES)
+        // Get final solution
+        val finalSolution = solverService.getFinalBestSolution(jobId)
+            ?: throw IllegalStateException("No solution found")
 
         // Map back to domain
         val trips = mapper.toTrips(finalSolution, organizationId, jobId)
         val score = finalSolution.score ?: throw IllegalStateException("No score calculated")
 
         return SolverResult(
-            hardScore = score.hardScore(),
-            softScore = score.softScore(),
+            hardScore = score.hardScore().toInt(),
+            softScore = score.softScore().toInt(),
             trips = trips
         )
     }

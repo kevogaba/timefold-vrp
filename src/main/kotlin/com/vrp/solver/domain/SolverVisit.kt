@@ -1,6 +1,6 @@
 package com.vrp.solver.domain
 
-import ai.timefold.solver.core.api.domain.lookup.PlanningId
+import ai.timefold.solver.core.api.domain.common.PlanningId
 import com.vrp.domain.model.Location
 import java.math.BigDecimal
 import java.time.LocalDateTime

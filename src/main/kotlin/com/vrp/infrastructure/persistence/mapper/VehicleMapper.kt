@@ -22,16 +22,20 @@ class VehicleMapper {
             endLocation = Location(entity.endLat, entity.endLon),
             availableFrom = entity.availableFrom,
             availableUntil = entity.availableUntil,
-            driver = if (entity.driverId != null && entity.driverName != null && entity.driverLicense != null) {
-                Driver(
-                    id = entity.driverId,
-                    organizationId = entity.organizationId,
-                    name = entity.driverName,
-                    licenseNumber = entity.driverLicense,
-                    phoneNumber = entity.driverPhone,
-                    email = entity.driverEmail
-                )
-            } else null,
+            driver = entity.driverId?.let { driverId ->
+                entity.driverName?.let { driverName ->
+                    entity.driverLicense?.let { driverLicense ->
+                        Driver(
+                            id = driverId,
+                            organizationId = entity.organizationId,
+                            name = driverName,
+                            licenseNumber = driverLicense,
+                            phoneNumber = entity.driverPhone,
+                            email = entity.driverEmail
+                        )
+                    }
+                }
+            },
             costPerKm = entity.costPerKm
         )
     }
