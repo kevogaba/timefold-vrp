@@ -118,6 +118,15 @@ tasks {
     bootJar {
         archiveFileName.set("${project.name}.jar")
     }
+
+    // Disable AOT processing tasks as they conflict with Timefold Solver XML configuration loading
+    // The solver config is loaded at runtime, which works fine for regular builds and native compilation
+    named("processAot") {
+        enabled = false
+    }
+    named("processTestAot") {
+        enabled = false
+    }
 }
 
 // Kover coverage configuration
