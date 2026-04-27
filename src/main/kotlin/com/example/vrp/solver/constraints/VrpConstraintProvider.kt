@@ -42,12 +42,13 @@ class VrpConstraintProvider : ConstraintProvider {
     private fun deliveryTimeWindow(factory: ConstraintFactory): Constraint =
         factory.forEach(SolverVisit::class.java)
             .filter { visit ->
-                visit.vehicle != null && visit.timeWindow.end.isBefore(
-                    java.time.LocalDateTime.now()
-                )
+                // Penalise when the delivery time window start is after the vehicle's work-shift end.
+                // This is a fully deterministic, planning-data-only check.
+                visit.vehicle != null &&
+                        visit.timeWindow.start.toLocalTime().isAfter(visit.vehicle!!.workingHours.end)
             }
             .penalize(HardSoftScore.ONE_HARD)
-            .asConstraint("Delivery outside time window")
+            .asConstraint("Delivery outside vehicle working hours")
 
     private fun minimizeTotalDistance(factory: ConstraintFactory): Constraint =
         factory.forEach(SolverVisit::class.java)

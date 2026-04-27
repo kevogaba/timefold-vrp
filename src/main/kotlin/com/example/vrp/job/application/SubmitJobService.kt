@@ -32,11 +32,12 @@ class SubmitJobService(
         val saved = jobRepository.save(job)
         jobCachePort.put(organizationId, saved)
 
+        // Notify listeners that a new job has been submitted (no prior status)
         eventPublisher.publishEvent(
             JobStatusChangedEvent(
                 jobId = saved.id,
                 organizationId = organizationId,
-                previousStatus = JobStatus.SUBMITTED,
+                previousStatus = null,
                 newStatus = JobStatus.SUBMITTED,
             )
         )

@@ -15,16 +15,18 @@ class SolverOutputMapper {
             val visits = solution.visits.filter { it.vehicle?.id == vehicle.id }
             if (visits.isEmpty()) return@mapNotNull null
 
-            val totalDistance = visits.fold(0.0) { acc, visit ->
-                acc + vehicle.depotLocation.distanceTo(visit.location)
-            }
+            // Total distance = depot→visit₁ + visit₁→visit₂ + … + visitₙ→depot
+            val locations = listOf(vehicle.depotLocation) +
+                    visits.map { it.location } +
+                    listOf(vehicle.depotLocation)
+            val totalDistance = locations.zipWithNext().sumOf { (a, b) -> a.distanceTo(b) }
 
             Trip(
                 id = UUID.randomUUID().toString(),
                 jobId = jobId,
                 organizationId = organizationId,
                 vehicleId = vehicle.id,
-                visits = visits.mapIndexed { idx, visit ->
+                visits = visits.map { visit ->
                     Visit(
                         id = UUID.randomUUID().toString(),
                         orderId = visit.orderId,
