@@ -142,9 +142,9 @@ kover {
 
 // Spring Cloud Contract configuration
 contracts {
-    testFramework = org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
-    baseClassForTests = "com.vrp.ContractTestBase"
-    contractsDirectory = file("src/test/resources/contracts")
+    testFramework.set(org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5)
+    baseClassForTests.set("com.vrp.ContractTestBase")
+    contractsDslDir.set(file("src/test/resources/contracts"))
 }
 
 // AllOpen configuration for JPA entities
