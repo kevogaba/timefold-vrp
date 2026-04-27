@@ -47,7 +47,6 @@ class OrderMapper {
 
     fun toEntity(domain: Order): OrderEntity {
         val entity = OrderEntity(
-            id = domain.id,
             organizationId = domain.organizationId,
             customerId = domain.customer.id,
             customerName = domain.customer.name,
@@ -69,7 +68,6 @@ class OrderMapper {
 
         entity.lineItems.addAll(domain.lineItems.map { lineItem ->
             LineItemEntity(
-                id = lineItem.id,
                 order = entity,
                 name = lineItem.name,
                 quantity = lineItem.quantity,

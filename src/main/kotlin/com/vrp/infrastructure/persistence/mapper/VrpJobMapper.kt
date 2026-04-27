@@ -26,7 +26,6 @@ class VrpJobMapper {
 
     fun toEntity(domain: VrpJob): VrpJobEntity {
         return VrpJobEntity(
-            id = domain.id,
             organizationId = domain.organizationId,
             status = domain.status,
             hardScore = domain.hardScore,

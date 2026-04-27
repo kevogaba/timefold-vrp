@@ -42,7 +42,6 @@ class VehicleMapper {
 
     fun toEntity(domain: Vehicle): VehicleEntity {
         return VehicleEntity(
-            id = domain.id,
             organizationId = domain.organizationId,
             name = domain.name,
             licensePlate = domain.licensePlate,

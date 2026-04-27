@@ -34,7 +34,6 @@ class TripMapper {
 
     fun toEntity(domain: Trip): TripEntity {
         val entity = TripEntity(
-            id = domain.id,
             organizationId = domain.organizationId,
             jobId = domain.jobId,
             vehicleId = domain.vehicleId,
@@ -45,7 +44,6 @@ class TripMapper {
 
         entity.visits.addAll(domain.visits.map { visit ->
             VisitEntity(
-                id = visit.id,
                 trip = entity,
                 orderId = visit.orderId,
                 locationLat = visit.location.latitude,
