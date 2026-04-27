@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:17-alpine:///vrp_test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  flyway:
+    enabled: false
+
+  data:
+    redis:
+      enabled: false
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/test
+          jwk-set-uri: http://localhost:8080/realms/test/protocol/openid-connect/certs
+
+temporal:
+  enabled: false
+
+management:
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+    metrics:
+      endpoint: http://localhost:4318/v1/metrics
+
+sentry:
+  dsn: ""
+  enabled: false
+
+logging:
+  level:
+    com.vrp: DEBUG
+    org.springframework.cloud.contract: DEBUG

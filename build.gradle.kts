@@ -4,9 +4,10 @@ plugins {
     alias(libs.plugins.kotlin.jpa)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
-    // alias(libs.plugins.spring.cloud.contract) // TODO: Fix plugin resolution
+    alias(libs.plugins.spring.cloud.contract)
     alias(libs.plugins.kover)
     alias(libs.plugins.graalvm.native)
+    kotlin("plugin.allopen") version "2.3.21"
 }
 
 group = "com.vrp"
@@ -32,6 +33,12 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom(libs.spring.cloud.dependencies.get().toString())
+    }
 }
 
 dependencies {
@@ -89,8 +96,7 @@ dependencies {
     testImplementation(libs.timefold.solver.test)
     testImplementation(libs.temporal.testing)
     testImplementation(libs.spring.modulith.starter.test)
-    testImplementation(libs.spring.cloud.contract.verifier)
-    testImplementation(libs.spring.cloud.contract.stub.runner)
+    testImplementation(libs.spring.cloud.starter.contract.verifier)
     testImplementation(libs.testcontainers.postgresql)
     testImplementation(libs.testcontainers.junit.jupiter)
     testImplementation(libs.mockk)
@@ -101,6 +107,10 @@ tasks {
     test {
         useJUnitPlatform()
         finalizedBy(koverHtmlReport, koverXmlReport)
+    }
+
+    contractTest {
+        useJUnitPlatform()
     }
 
     bootJar {
@@ -131,12 +141,18 @@ kover {
 }
 
 // Spring Cloud Contract configuration
-// TODO: Re-enable when plugin is available
-// contracts {
-//     testFramework = org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
-//     baseClassForTests = "com.vrp.ContractTestBase"
-//     contractsDirectory = file("src/test/resources/contracts")
-// }
+contracts {
+    testFramework = org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
+    baseClassForTests = "com.vrp.ContractTestBase"
+    contractsDirectory = file("src/test/resources/contracts")
+}
+
+// AllOpen configuration for JPA entities
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
+}
 
 // GraalVM Native configuration
 graalvmNative {
