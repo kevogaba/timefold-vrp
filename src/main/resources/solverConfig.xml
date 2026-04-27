@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver xmlns="https://timefold.ai/xsd/solver" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://timefold.ai/xsd/solver https://timefold.ai/xsd/solver/solver.xsd">
+
+  <solutionClass>com.example.vrp.solver.domain.VrpSolution</solutionClass>
+  <entityClass>com.example.vrp.solver.domain.SolverVisit</entityClass>
+
+  <constructionHeuristic>
+    <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
+  </constructionHeuristic>
+
+  <localSearch>
+    <localSearchType>LATE_ACCEPTANCE</localSearchType>
+    <termination>
+      <secondsSpentLimit>30</secondsSpentLimit>
+    </termination>
+  </localSearch>
+
+</solver>
