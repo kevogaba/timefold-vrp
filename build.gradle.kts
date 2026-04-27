@@ -144,9 +144,9 @@ kover {
             verify {
                 onCheck = true
                 rule {
-                    // Temporarily lowered from 80% to allow builds to pass
-                    // TODO: Increase coverage by adding tests for new entities and infrastructure code
-                    minBound(10)
+                    // Coverage threshold restored to 80%
+                    // Current coverage: 47.7% - need additional tests for adapters, services, and workflows
+                    minBound(80)
                 }
             }
         }
