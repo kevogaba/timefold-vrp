@@ -1,5 +1,6 @@
 package com.vrp.infrastructure.persistence.entity
 
+import com.github.f4b6a3.uuid.UuidCreator
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -13,6 +14,9 @@ import java.util.UUID
 data class OrderEntity(
     @Id
     val id: UUID = UUID.randomUUID(),
+
+    @Column(nullable = false, unique = true)
+    val guid: UUID = UuidCreator.getTimeOrderedEpoch(),
 
     @Column(nullable = false)
     val organizationId: UUID,

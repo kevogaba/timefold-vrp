@@ -86,7 +86,7 @@ springdoc:
 timefold:
   solver:
     solver-config-xml: classpath:solverConfig.xml
-    environment-mode: REPRODUCIBLE
+    environment-mode: FULL_ASSERT
 
 logging:
   level:

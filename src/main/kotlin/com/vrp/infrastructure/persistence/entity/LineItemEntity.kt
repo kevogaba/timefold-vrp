@@ -1,5 +1,6 @@
 package com.vrp.infrastructure.persistence.entity
 
+import com.github.f4b6a3.uuid.UuidCreator
 import jakarta.persistence.*
 import java.math.BigDecimal
 import java.util.UUID
@@ -9,6 +10,9 @@ import java.util.UUID
 data class LineItemEntity(
     @Id
     val id: UUID = UUID.randomUUID(),
+
+    @Column(nullable = false, unique = true)
+    val guid: UUID = UuidCreator.getTimeOrderedEpoch(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)

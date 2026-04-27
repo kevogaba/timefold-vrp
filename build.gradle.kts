@@ -86,6 +86,9 @@ dependencies {
     implementation(libs.flyway.core)
     implementation(libs.flyway.database.postgresql)
 
+    // UUID v7
+    implementation(libs.uuid.creator)
+
     // Logging
     implementation(libs.logback.classic)
     implementation(libs.logback.encoder)

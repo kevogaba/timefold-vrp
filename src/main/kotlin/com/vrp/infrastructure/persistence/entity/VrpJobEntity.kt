@@ -1,5 +1,6 @@
 package com.vrp.infrastructure.persistence.entity
 
+import com.github.f4b6a3.uuid.UuidCreator
 import com.vrp.domain.model.JobStatus
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
@@ -14,6 +15,9 @@ import java.util.UUID
 data class VrpJobEntity(
     @Id
     val id: UUID = UUID.randomUUID(),
+
+    @Column(nullable = false, unique = true)
+    val guid: UUID = UuidCreator.getTimeOrderedEpoch(),
 
     @Column(nullable = false)
     val organizationId: UUID,
