@@ -1,10 +1,13 @@
 package com.vrp.infrastructure.temporal.activity.impl
 
+import ai.timefold.solver.core.api.score.HardSoftScore
+import ai.timefold.solver.core.api.solver.SolverStatus
 import com.vrp.domain.model.*
 import com.vrp.domain.port.OrderRepository
 import com.vrp.domain.port.TripRepository
 import com.vrp.domain.port.VehicleRepository
 import com.vrp.infrastructure.temporal.activity.SolverResult
+import com.vrp.solver.domain.VrpSolution
 import com.vrp.solver.service.VrpSolverService
 import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
@@ -15,12 +18,8 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.UUID
-import ai.timefold.solver.core.api.solver.SolverStatus
-import ai.timefold.solver.core.api.score.HardSoftScore
-import com.vrp.solver.domain.VrpSolution
 
 class FetchOrdersActivityImplTest {
-
     private lateinit var orderRepository: OrderRepository
     private lateinit var activity: FetchOrdersActivityImpl
 
@@ -57,22 +56,34 @@ class FetchOrdersActivityImplTest {
         assertThat(result).isEmpty()
     }
 
-    private fun createOrder(id: UUID = UUID.randomUUID(), organizationId: UUID = UUID.randomUUID()): Order {
-        return Order(
+    private fun createOrder(
+        id: UUID = UUID.randomUUID(),
+        organizationId: UUID = UUID.randomUUID()
+    ): Order =
+        Order(
             id = id,
             organizationId = organizationId,
             customer = createCustomer(organizationId),
             pickupLocation = null,
             deliveryLocation = Location(40.7589, -73.9851),
-            lineItems = listOf(LineItem(id = UUID.randomUUID(), name = "Item", quantity = 1, weight = BigDecimal("10"), volume = BigDecimal("1"), price = BigDecimal("100"))),
+            lineItems =
+                listOf(
+                    LineItem(
+                        id = UUID.randomUUID(),
+                        name = "Item",
+                        quantity = 1,
+                        weight = BigDecimal("10"),
+                        volume = BigDecimal("1"),
+                        price = BigDecimal("100")
+                    )
+                ),
             timeWindowStart = LocalDateTime.now(),
             timeWindowEnd = LocalDateTime.now().plusHours(2),
             serviceDurationMinutes = 30
         )
-    }
 
-    private fun createCustomer(organizationId: UUID): Customer {
-        return Customer(
+    private fun createCustomer(organizationId: UUID): Customer =
+        Customer(
             id = UUID.randomUUID(),
             organizationId = organizationId,
             name = "Test Customer",
@@ -80,11 +91,9 @@ class FetchOrdersActivityImplTest {
             email = "test@example.com",
             location = Location(40.7589, -73.9851)
         )
-    }
 }
 
 class FetchVehiclesActivityImplTest {
-
     private lateinit var vehicleRepository: VehicleRepository
     private lateinit var activity: FetchVehiclesActivityImpl
 
@@ -121,8 +130,11 @@ class FetchVehiclesActivityImplTest {
         assertThat(result).isEmpty()
     }
 
-    private fun createVehicle(id: UUID = UUID.randomUUID(), organizationId: UUID = UUID.randomUUID()): Vehicle {
-        return Vehicle(
+    private fun createVehicle(
+        id: UUID = UUID.randomUUID(),
+        organizationId: UUID = UUID.randomUUID()
+    ): Vehicle =
+        Vehicle(
             id = id,
             organizationId = organizationId,
             name = "Test Vehicle",
@@ -136,11 +148,9 @@ class FetchVehiclesActivityImplTest {
             driver = null,
             costPerKm = BigDecimal("0.50")
         )
-    }
 }
 
 class PersistSolutionActivityImplTest {
-
     private lateinit var tripRepository: TripRepository
     private lateinit var activity: PersistSolutionActivityImpl
 
@@ -177,31 +187,30 @@ class PersistSolutionActivityImplTest {
         verify { tripRepository.saveAll(emptyList()) }
     }
 
-    private fun createTrip(): Trip {
-        return Trip(
+    private fun createTrip(): Trip =
+        Trip(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
             jobId = UUID.randomUUID(),
             vehicleId = UUID.randomUUID(),
-            visits = listOf(
-                Visit(
-                    id = UUID.randomUUID(),
-                    orderId = UUID.randomUUID(),
-                    location = Location(40.7589, -73.9851),
-                    arrivalTime = LocalDateTime.now(),
-                    departureTime = LocalDateTime.now().plusMinutes(30),
-                    sequenceNumber = 0
-                )
-            ),
+            visits =
+                listOf(
+                    Visit(
+                        id = UUID.randomUUID(),
+                        orderId = UUID.randomUUID(),
+                        location = Location(40.7589, -73.9851),
+                        arrivalTime = LocalDateTime.now(),
+                        departureTime = LocalDateTime.now().plusMinutes(30),
+                        sequenceNumber = 0
+                    )
+                ),
             totalDistanceMeters = 10000L,
             totalDurationMinutes = 60,
             createdAt = LocalDateTime.now()
         )
-    }
 }
 
 class RunSolverActivityImplTest {
-
     private lateinit var solverService: VrpSolverService
     private lateinit var activity: RunSolverActivityImpl
 
@@ -220,10 +229,11 @@ class RunSolverActivityImplTest {
         val solution = createSolution(jobId)
 
         every { solverService.solve(jobId, any()) } returns jobId
-        every { solverService.getSolverStatus(jobId) } returnsMany listOf(
-            SolverStatus.SOLVING_ACTIVE,
-            SolverStatus.NOT_SOLVING
-        )
+        every { solverService.getSolverStatus(jobId) } returnsMany
+            listOf(
+                SolverStatus.SOLVING_ACTIVE,
+                SolverStatus.NOT_SOLVING
+            )
         every { solverService.getFinalBestSolution(jobId) } returns solution
 
         val result = activity.runSolver(jobId, organizationId, orders, vehicles)
@@ -279,15 +289,25 @@ class RunSolverActivityImplTest {
             customer = createCustomer(organizationId),
             pickupLocation = null,
             deliveryLocation = Location(40.7589, -73.9851),
-            lineItems = listOf(LineItem(id = UUID.randomUUID(), name = "Item", quantity = 1, weight = BigDecimal("10"), volume = BigDecimal("1"), price = BigDecimal("100"))),
+            lineItems =
+                listOf(
+                    LineItem(
+                        id = UUID.randomUUID(),
+                        name = "Item",
+                        quantity = 1,
+                        weight = BigDecimal("10"),
+                        volume = BigDecimal("1"),
+                        price = BigDecimal("100")
+                    )
+                ),
             timeWindowStart = LocalDateTime.now(),
             timeWindowEnd = LocalDateTime.now().plusHours(2),
             serviceDurationMinutes = 30
         )
     }
 
-    private fun createCustomer(organizationId: UUID): Customer {
-        return Customer(
+    private fun createCustomer(organizationId: UUID): Customer =
+        Customer(
             id = UUID.randomUUID(),
             organizationId = organizationId,
             name = "Test Customer",
@@ -295,10 +315,9 @@ class RunSolverActivityImplTest {
             email = "test@example.com",
             location = Location(40.7589, -73.9851)
         )
-    }
 
-    private fun createVehicle(): Vehicle {
-        return Vehicle(
+    private fun createVehicle(): Vehicle =
+        Vehicle(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
             name = "Test Vehicle",
@@ -312,29 +331,30 @@ class RunSolverActivityImplTest {
             driver = null,
             costPerKm = BigDecimal("0.50")
         )
-    }
 
     private fun createSolution(jobId: UUID): VrpSolution {
-        val vehicle = com.vrp.solver.domain.SolverVehicle(
-            id = UUID.randomUUID(),
-            name = "Vehicle 1",
-            weightCapacity = BigDecimal("1000"),
-            volumeCapacity = BigDecimal("50"),
-            startLocation = Location(40.7128, -74.0060),
-            endLocation = Location(40.7128, -74.0060),
-            availableFrom = LocalTime.of(8, 0),
-            availableUntil = LocalTime.of(18, 0)
-        )
-        val visit = com.vrp.solver.domain.SolverVisit(
-            id = UUID.randomUUID(),
-            orderId = UUID.randomUUID(),
-            location = Location(40.7589, -73.9851),
-            demandWeight = BigDecimal("10"),
-            demandVolume = BigDecimal("1"),
-            timeWindowStart = LocalDateTime.now(),
-            timeWindowEnd = LocalDateTime.now().plusHours(2),
-            serviceDurationMinutes = 30
-        )
+        val vehicle =
+            com.vrp.solver.domain.SolverVehicle(
+                id = UUID.randomUUID(),
+                name = "Vehicle 1",
+                weightCapacity = BigDecimal("1000"),
+                volumeCapacity = BigDecimal("50"),
+                startLocation = Location(40.7128, -74.0060),
+                endLocation = Location(40.7128, -74.0060),
+                availableFrom = LocalTime.of(8, 0),
+                availableUntil = LocalTime.of(18, 0)
+            )
+        val visit =
+            com.vrp.solver.domain.SolverVisit(
+                id = UUID.randomUUID(),
+                orderId = UUID.randomUUID(),
+                location = Location(40.7589, -73.9851),
+                demandWeight = BigDecimal("10"),
+                demandVolume = BigDecimal("1"),
+                timeWindowStart = LocalDateTime.now(),
+                timeWindowEnd = LocalDateTime.now().plusHours(2),
+                serviceDurationMinutes = 30
+            )
         vehicle.visits.add(visit)
 
         return VrpSolution(

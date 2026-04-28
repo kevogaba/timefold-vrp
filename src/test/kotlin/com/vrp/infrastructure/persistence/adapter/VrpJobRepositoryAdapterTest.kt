@@ -18,7 +18,6 @@ import java.time.LocalTime
 import java.util.UUID
 
 class VrpJobRepositoryAdapterTest {
-
     private lateinit var jpaRepository: VrpJobJpaRepository
     private lateinit var orderJpaRepository: OrderJpaRepository
     private lateinit var vehicleJpaRepository: VehicleJpaRepository
@@ -83,10 +82,11 @@ class VrpJobRepositoryAdapterTest {
     @Test
     fun `should find all jobs by organizationId`() {
         val organizationId = UUID.randomUUID()
-        val entities = listOf(
-            createJobEntity(organizationId = organizationId),
-            createJobEntity(organizationId = organizationId)
-        )
+        val entities =
+            listOf(
+                createJobEntity(organizationId = organizationId),
+                createJobEntity(organizationId = organizationId)
+            )
 
         every { jpaRepository.findAllByOrganizationId(organizationId) } returns entities
 
@@ -139,13 +139,14 @@ class VrpJobRepositoryAdapterTest {
         every { jpaRepository.findByIdAndOrganizationId(jobId, organizationId) } returns entity
         every { jpaRepository.save(any()) } returns entity
 
-        val result = adapter.updateWithScore(
-            id = jobId,
-            status = JobStatus.COMPLETED,
-            hardScore = 0,
-            softScore = -1000,
-            organizationId = organizationId
-        )
+        val result =
+            adapter.updateWithScore(
+                id = jobId,
+                status = JobStatus.COMPLETED,
+                hardScore = 0,
+                softScore = -1000,
+                organizationId = organizationId
+            )
 
         assertThat(result).isNotNull
         assertThat(result?.hardScore).isEqualTo(0)
@@ -167,8 +168,8 @@ class VrpJobRepositoryAdapterTest {
         verify(exactly = 0) { jpaRepository.save(any()) }
     }
 
-    private fun createJob(): VrpJob {
-        return VrpJob(
+    private fun createJob(): VrpJob =
+        VrpJob(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
             status = JobStatus.PENDING,
@@ -181,21 +182,21 @@ class VrpJobRepositoryAdapterTest {
             startedAt = null,
             completedAt = null
         )
-    }
 
     private fun createJobEntity(organizationId: UUID = UUID.randomUUID()): VrpJobEntity {
-        val entity = VrpJobEntity(
-            organizationId = organizationId,
-            status = JobStatus.PENDING
-        )
+        val entity =
+            VrpJobEntity(
+                organizationId = organizationId,
+                status = JobStatus.PENDING
+            )
         // Add required orders and vehicles to satisfy validation
         entity.orders.add(createOrderEntity(organizationId))
         entity.vehicles.add(createVehicleEntity(organizationId))
         return entity
     }
 
-    private fun createOrderEntity(organizationId: UUID = UUID.randomUUID()): OrderEntity {
-        return OrderEntity(
+    private fun createOrderEntity(organizationId: UUID = UUID.randomUUID()): OrderEntity =
+        OrderEntity(
             organizationId = organizationId,
             customerId = UUID.randomUUID(),
             customerName = "Test Customer",
@@ -207,10 +208,9 @@ class VrpJobRepositoryAdapterTest {
             timeWindowEnd = LocalDateTime.now().plusHours(4),
             serviceDurationMinutes = 30
         )
-    }
 
-    private fun createVehicleEntity(organizationId: UUID = UUID.randomUUID()): VehicleEntity {
-        return VehicleEntity(
+    private fun createVehicleEntity(organizationId: UUID = UUID.randomUUID()): VehicleEntity =
+        VehicleEntity(
             organizationId = organizationId,
             name = "Test Vehicle",
             licensePlate = "ABC123",
@@ -223,5 +223,4 @@ class VrpJobRepositoryAdapterTest {
             availableFrom = LocalTime.of(8, 0),
             availableUntil = LocalTime.of(18, 0)
         )
-    }
 }

@@ -11,34 +11,31 @@ import com.vrp.solver.mapper.SolverDomainMapper
 import com.vrp.solver.service.VrpSolverService
 import org.springframework.stereotype.Component
 import java.util.UUID
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 @Component
 class FetchOrdersActivityImpl(
     private val orderRepository: OrderRepository
 ) : FetchOrdersActivity {
-
-    override fun fetchOrders(organizationId: UUID, orderIds: List<UUID>): List<Order> {
-        return orderRepository.findAllByIds(orderIds, organizationId)
-    }
+    override fun fetchOrders(
+        organizationId: UUID,
+        orderIds: List<UUID>
+    ): List<Order> = orderRepository.findAllByIds(orderIds, organizationId)
 }
 
 @Component
 class FetchVehiclesActivityImpl(
     private val vehicleRepository: VehicleRepository
 ) : FetchVehiclesActivity {
-
-    override fun fetchVehicles(organizationId: UUID, vehicleIds: List<UUID>): List<Vehicle> {
-        return vehicleRepository.findAllByIds(vehicleIds, organizationId)
-    }
+    override fun fetchVehicles(
+        organizationId: UUID,
+        vehicleIds: List<UUID>
+    ): List<Vehicle> = vehicleRepository.findAllByIds(vehicleIds, organizationId)
 }
 
 @Component
 class RunSolverActivityImpl(
     private val solverService: VrpSolverService
 ) : RunSolverActivity {
-
     override fun runSolver(
         jobId: UUID,
         organizationId: UUID,
@@ -60,8 +57,9 @@ class RunSolverActivityImpl(
         }
 
         // Get final solution
-        val finalSolution = solverService.getFinalBestSolution(jobId)
-            ?: throw IllegalStateException("No solution found")
+        val finalSolution =
+            solverService.getFinalBestSolution(jobId)
+                ?: throw IllegalStateException("No solution found")
 
         // Map back to domain
         val trips = mapper.toTrips(finalSolution, organizationId, jobId)
@@ -79,8 +77,11 @@ class RunSolverActivityImpl(
 class PersistSolutionActivityImpl(
     private val tripRepository: TripRepository
 ) : PersistSolutionActivity {
-
-    override fun persist(jobId: UUID, organizationId: UUID, result: SolverResult) {
+    override fun persist(
+        jobId: UUID,
+        organizationId: UUID,
+        result: SolverResult
+    ) {
         tripRepository.saveAll(result.trips)
     }
 }

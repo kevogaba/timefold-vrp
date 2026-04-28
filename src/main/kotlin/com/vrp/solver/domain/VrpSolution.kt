@@ -15,14 +15,11 @@ import java.util.UUID
 data class VrpSolution(
     @PlanningEntityCollectionProperty
     val vehicles: MutableList<SolverVehicle> = mutableListOf(),
-
     @ProblemFactCollectionProperty
     @ValueRangeProvider
     val visits: MutableList<SolverVisit> = mutableListOf(),
-
     @PlanningScore
     var score: HardSoftScore? = null,
-
     val jobId: UUID? = null
 ) {
     // No-arg constructor for Timefold

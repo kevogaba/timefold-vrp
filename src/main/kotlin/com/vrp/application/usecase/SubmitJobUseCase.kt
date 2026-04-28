@@ -31,7 +31,6 @@ class SubmitJobUseCase(
     private val jobRepository: VrpJobRepository,
     private val orchestrationPort: VrpOrchestrationPort
 ) {
-
     /**
      * Submits a new VRP optimization job for the specified organization.
      *
@@ -45,19 +44,24 @@ class SubmitJobUseCase(
      * @throws IllegalArgumentException if orderIds or vehicleIds are empty
      * @throws IllegalStateException if the job cannot be transitioned to RUNNING status
      */
-    fun execute(organizationId: UUID, orderIds: List<UUID>, vehicleIds: List<UUID>): VrpJob {
+    fun execute(
+        organizationId: UUID,
+        orderIds: List<UUID>,
+        vehicleIds: List<UUID>
+    ): VrpJob {
         require(orderIds.isNotEmpty()) { "Order IDs cannot be empty" }
         require(vehicleIds.isNotEmpty()) { "Vehicle IDs cannot be empty" }
 
         // Create job
-        val job = VrpJob(
-            id = UUID.randomUUID(),
-            organizationId = organizationId,
-            status = JobStatus.PENDING,
-            orderIds = orderIds,
-            vehicleIds = vehicleIds,
-            createdAt = LocalDateTime.now()
-        )
+        val job =
+            VrpJob(
+                id = UUID.randomUUID(),
+                organizationId = organizationId,
+                status = JobStatus.PENDING,
+                orderIds = orderIds,
+                vehicleIds = vehicleIds,
+                createdAt = LocalDateTime.now()
+            )
 
         // Save job
         val savedJob = jobRepository.save(job)

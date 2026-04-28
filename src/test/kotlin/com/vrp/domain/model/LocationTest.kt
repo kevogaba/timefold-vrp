@@ -3,10 +3,8 @@ package com.vrp.domain.model
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class LocationTest {
-
     @Test
     fun `should create valid location`() {
         val location = Location(37.7749, -122.4194)

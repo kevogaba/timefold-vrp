@@ -8,7 +8,15 @@ import java.util.UUID
 
 @Repository
 interface VrpJobJpaRepository : JpaRepository<VrpJobEntity, UUID> {
-    fun findByIdAndOrganizationId(id: UUID, organizationId: UUID): VrpJobEntity?
+    fun findByIdAndOrganizationId(
+        id: UUID,
+        organizationId: UUID
+    ): VrpJobEntity?
+
     fun findAllByOrganizationId(organizationId: UUID): List<VrpJobEntity>
-    fun findAllByOrganizationIdAndStatus(organizationId: UUID, status: JobStatus): List<VrpJobEntity>
+
+    fun findAllByOrganizationIdAndStatus(
+        organizationId: UUID,
+        status: JobStatus
+    ): List<VrpJobEntity>
 }

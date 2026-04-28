@@ -13,7 +13,6 @@ import java.time.LocalTime
 import java.util.UUID
 
 class VehicleRepositoryAdapterTest {
-
     private lateinit var jpaRepository: VehicleJpaRepository
     private lateinit var mapper: VehicleMapper
     private lateinit var adapter: VehicleRepositoryAdapter
@@ -68,10 +67,11 @@ class VehicleRepositoryAdapterTest {
     @Test
     fun `should find all vehicles by organizationId`() {
         val organizationId = UUID.randomUUID()
-        val entities = listOf(
-            createVehicleEntity(organizationId = organizationId),
-            createVehicleEntity(organizationId = organizationId)
-        )
+        val entities =
+            listOf(
+                createVehicleEntity(organizationId = organizationId),
+                createVehicleEntity(organizationId = organizationId)
+            )
 
         every { jpaRepository.findAllByOrganizationId(organizationId) } returns entities
 
@@ -108,8 +108,8 @@ class VehicleRepositoryAdapterTest {
         verify { jpaRepository.deleteByIdAndOrganizationId(vehicleId, organizationId) }
     }
 
-    private fun createVehicle(): Vehicle {
-        return Vehicle(
+    private fun createVehicle(): Vehicle =
+        Vehicle(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
             name = "Test Vehicle",
@@ -123,10 +123,9 @@ class VehicleRepositoryAdapterTest {
             driver = null,
             costPerKm = BigDecimal("0.50")
         )
-    }
 
-    private fun createVehicleEntity(organizationId: UUID = UUID.randomUUID()): VehicleEntity {
-        return VehicleEntity(
+    private fun createVehicleEntity(organizationId: UUID = UUID.randomUUID()): VehicleEntity =
+        VehicleEntity(
             organizationId = organizationId,
             name = "Test Vehicle",
             licensePlate = "ABC123",
@@ -139,5 +138,4 @@ class VehicleRepositoryAdapterTest {
             availableFrom = LocalTime.of(8, 0),
             availableUntil = LocalTime.of(18, 0)
         )
-    }
 }

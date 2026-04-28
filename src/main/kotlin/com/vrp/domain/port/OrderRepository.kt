@@ -8,8 +8,21 @@ import java.util.UUID
  */
 interface OrderRepository {
     fun save(order: Order): Order
-    fun findById(id: UUID, organizationId: UUID): Order?
+
+    fun findById(
+        id: UUID,
+        organizationId: UUID
+    ): Order?
+
     fun findAllByOrganizationId(organizationId: UUID): List<Order>
-    fun findAllByIds(ids: List<UUID>, organizationId: UUID): List<Order>
-    fun deleteById(id: UUID, organizationId: UUID)
+
+    fun findAllByIds(
+        ids: List<UUID>,
+        organizationId: UUID
+    ): List<Order>
+
+    fun deleteById(
+        id: UUID,
+        organizationId: UUID
+    )
 }

@@ -6,20 +6,20 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 class DriverTest {
-
     @Test
     fun `should create driver with all properties`() {
         val id = UUID.randomUUID()
         val organizationId = UUID.randomUUID()
 
-        val driver = Driver(
-            id = id,
-            organizationId = organizationId,
-            name = "John Driver",
-            licenseNumber = "DL123456",
-            phoneNumber = "+1234567890",
-            email = "driver@example.com"
-        )
+        val driver =
+            Driver(
+                id = id,
+                organizationId = organizationId,
+                name = "John Driver",
+                licenseNumber = "DL123456",
+                phoneNumber = "+1234567890",
+                email = "driver@example.com"
+            )
 
         assertThat(driver.id).isEqualTo(id)
         assertThat(driver.organizationId).isEqualTo(organizationId)
@@ -31,14 +31,15 @@ class DriverTest {
 
     @Test
     fun `should create driver without optional fields`() {
-        val driver = Driver(
-            id = UUID.randomUUID(),
-            organizationId = UUID.randomUUID(),
-            name = "Jane Driver",
-            licenseNumber = "DL654321",
-            phoneNumber = null,
-            email = null
-        )
+        val driver =
+            Driver(
+                id = UUID.randomUUID(),
+                organizationId = UUID.randomUUID(),
+                name = "Jane Driver",
+                licenseNumber = "DL654321",
+                phoneNumber = null,
+                email = null
+            )
 
         assertThat(driver.phoneNumber).isNull()
         assertThat(driver.email).isNull()

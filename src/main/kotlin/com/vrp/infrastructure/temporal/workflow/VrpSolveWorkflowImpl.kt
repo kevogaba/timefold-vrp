@@ -1,7 +1,5 @@
 package com.vrp.infrastructure.temporal.workflow
 
-import com.vrp.domain.model.Order
-import com.vrp.domain.model.Vehicle
 import com.vrp.infrastructure.temporal.activity.*
 import io.temporal.activity.ActivityOptions
 import io.temporal.common.RetryOptions
@@ -12,7 +10,6 @@ import java.time.Duration
  * Implementation of VRP solve workflow.
  */
 class VrpSolveWorkflowImpl : VrpSolveWorkflow {
-
     private var currentStatus: String = "PENDING"
 
     private val fetchOrdersActivity: FetchOrdersActivity
@@ -21,24 +18,28 @@ class VrpSolveWorkflowImpl : VrpSolveWorkflow {
     private val persistSolutionActivity: PersistSolutionActivity
 
     init {
-        val defaultOptions = ActivityOptions.newBuilder()
-            .setStartToCloseTimeout(Duration.ofMinutes(5))
-            .setRetryOptions(
-                RetryOptions.newBuilder()
-                    .setMaximumAttempts(3)
-                    .build()
-            )
-            .build()
+        val defaultOptions =
+            ActivityOptions
+                .newBuilder()
+                .setStartToCloseTimeout(Duration.ofMinutes(5))
+                .setRetryOptions(
+                    RetryOptions
+                        .newBuilder()
+                        .setMaximumAttempts(3)
+                        .build()
+                ).build()
 
-        val solverOptions = ActivityOptions.newBuilder()
-            .setStartToCloseTimeout(Duration.ofMinutes(10))
-            .setHeartbeatTimeout(Duration.ofSeconds(30))
-            .setRetryOptions(
-                RetryOptions.newBuilder()
-                    .setMaximumAttempts(1)
-                    .build()
-            )
-            .build()
+        val solverOptions =
+            ActivityOptions
+                .newBuilder()
+                .setStartToCloseTimeout(Duration.ofMinutes(10))
+                .setHeartbeatTimeout(Duration.ofSeconds(30))
+                .setRetryOptions(
+                    RetryOptions
+                        .newBuilder()
+                        .setMaximumAttempts(1)
+                        .build()
+                ).build()
 
         fetchOrdersActivity = Workflow.newActivityStub(FetchOrdersActivity::class.java, defaultOptions)
         fetchVehiclesActivity = Workflow.newActivityStub(FetchVehiclesActivity::class.java, defaultOptions)
@@ -46,8 +47,8 @@ class VrpSolveWorkflowImpl : VrpSolveWorkflow {
         persistSolutionActivity = Workflow.newActivityStub(PersistSolutionActivity::class.java, defaultOptions)
     }
 
-    override fun solve(input: VrpJobInput): VrpJobResult {
-        return try {
+    override fun solve(input: VrpJobInput): VrpJobResult =
+        try {
             currentStatus = "FETCHING_ORDERS"
             val orders = fetchOrdersActivity.fetchOrders(input.organizationId, input.orderIds)
 
@@ -78,7 +79,6 @@ class VrpSolveWorkflowImpl : VrpSolveWorkflow {
                 errorMessage = e.message
             )
         }
-    }
 
     override fun getStatus(): String = currentStatus
 }

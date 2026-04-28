@@ -8,29 +8,30 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class OrderTest {
-
     @Test
     fun `should calculate total weight correctly`() {
-        val order = createValidOrder(
-            lineItems = listOf(
-                LineItem(
-                    id = UUID.randomUUID(),
-                    name = "Item 1",
-                    quantity = 2,
-                    weight = BigDecimal("10.0"),
-                    volume = BigDecimal("1.0"),
-                    price = BigDecimal("50.00")
-                ),
-                LineItem(
-                    id = UUID.randomUUID(),
-                    name = "Item 2",
-                    quantity = 3,
-                    weight = BigDecimal("5.0"),
-                    volume = BigDecimal("0.5"),
-                    price = BigDecimal("25.00")
-                )
+        val order =
+            createValidOrder(
+                lineItems =
+                    listOf(
+                        LineItem(
+                            id = UUID.randomUUID(),
+                            name = "Item 1",
+                            quantity = 2,
+                            weight = BigDecimal("10.0"),
+                            volume = BigDecimal("1.0"),
+                            price = BigDecimal("50.00")
+                        ),
+                        LineItem(
+                            id = UUID.randomUUID(),
+                            name = "Item 2",
+                            quantity = 3,
+                            weight = BigDecimal("5.0"),
+                            volume = BigDecimal("0.5"),
+                            price = BigDecimal("25.00")
+                        )
+                    )
             )
-        )
 
         // 2 * 10.0 + 3 * 5.0 = 20.0 + 15.0 = 35.0
         assertThat(order.totalWeight).isEqualByComparingTo(BigDecimal("35.0"))
@@ -38,26 +39,28 @@ class OrderTest {
 
     @Test
     fun `should calculate total volume correctly`() {
-        val order = createValidOrder(
-            lineItems = listOf(
-                LineItem(
-                    id = UUID.randomUUID(),
-                    name = "Item 1",
-                    quantity = 2,
-                    weight = BigDecimal("10.0"),
-                    volume = BigDecimal("2.0"),
-                    price = BigDecimal("50.00")
-                ),
-                LineItem(
-                    id = UUID.randomUUID(),
-                    name = "Item 2",
-                    quantity = 4,
-                    weight = BigDecimal("5.0"),
-                    volume = BigDecimal("1.5"),
-                    price = BigDecimal("25.00")
-                )
+        val order =
+            createValidOrder(
+                lineItems =
+                    listOf(
+                        LineItem(
+                            id = UUID.randomUUID(),
+                            name = "Item 1",
+                            quantity = 2,
+                            weight = BigDecimal("10.0"),
+                            volume = BigDecimal("2.0"),
+                            price = BigDecimal("50.00")
+                        ),
+                        LineItem(
+                            id = UUID.randomUUID(),
+                            name = "Item 2",
+                            quantity = 4,
+                            weight = BigDecimal("5.0"),
+                            volume = BigDecimal("1.5"),
+                            price = BigDecimal("25.00")
+                        )
+                    )
             )
-        )
 
         // 2 * 2.0 + 4 * 1.5 = 4.0 + 6.0 = 10.0
         assertThat(order.totalVolume).isEqualByComparingTo(BigDecimal("10.0"))
@@ -65,26 +68,28 @@ class OrderTest {
 
     @Test
     fun `should calculate total value correctly`() {
-        val order = createValidOrder(
-            lineItems = listOf(
-                LineItem(
-                    id = UUID.randomUUID(),
-                    name = "Item 1",
-                    quantity = 2,
-                    weight = BigDecimal("10.0"),
-                    volume = BigDecimal("1.0"),
-                    price = BigDecimal("50.00")
-                ),
-                LineItem(
-                    id = UUID.randomUUID(),
-                    name = "Item 2",
-                    quantity = 3,
-                    weight = BigDecimal("5.0"),
-                    volume = BigDecimal("0.5"),
-                    price = BigDecimal("30.00")
-                )
+        val order =
+            createValidOrder(
+                lineItems =
+                    listOf(
+                        LineItem(
+                            id = UUID.randomUUID(),
+                            name = "Item 1",
+                            quantity = 2,
+                            weight = BigDecimal("10.0"),
+                            volume = BigDecimal("1.0"),
+                            price = BigDecimal("50.00")
+                        ),
+                        LineItem(
+                            id = UUID.randomUUID(),
+                            name = "Item 2",
+                            quantity = 3,
+                            weight = BigDecimal("5.0"),
+                            volume = BigDecimal("0.5"),
+                            price = BigDecimal("30.00")
+                        )
+                    )
             )
-        )
 
         // 2 * 50.00 + 3 * 30.00 = 100.00 + 90.00 = 190.00
         assertThat(order.totalValue).isEqualByComparingTo(BigDecimal("190.00"))
@@ -94,8 +99,7 @@ class OrderTest {
     fun `should throw exception when line items are empty`() {
         assertThatThrownBy {
             createValidOrder(lineItems = emptyList())
-        }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Order must have at least one line item")
     }
 
@@ -107,8 +111,7 @@ class OrderTest {
                 timeWindowStart = now,
                 timeWindowEnd = now.minusHours(1)
             )
-        }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Time window end must be after start")
     }
 
@@ -116,8 +119,7 @@ class OrderTest {
     fun `should throw exception when service duration is negative`() {
         assertThatThrownBy {
             createValidOrder(serviceDurationMinutes = -10)
-        }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Service duration cannot be negative")
     }
 
@@ -125,8 +127,7 @@ class OrderTest {
     fun `should throw exception when priority is negative`() {
         assertThatThrownBy {
             createValidOrder(priority = -1)
-        }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Priority cannot be negative")
     }
 
@@ -155,34 +156,36 @@ class OrderTest {
     }
 
     private fun createValidOrder(
-        lineItems: List<LineItem> = listOf(
-            LineItem(
-                id = UUID.randomUUID(),
-                name = "Default Item",
-                quantity = 1,
-                weight = BigDecimal("1.0"),
-                volume = BigDecimal("1.0"),
-                price = BigDecimal("10.00")
-            )
-        ),
+        lineItems: List<LineItem> =
+            listOf(
+                LineItem(
+                    id = UUID.randomUUID(),
+                    name = "Default Item",
+                    quantity = 1,
+                    weight = BigDecimal("1.0"),
+                    volume = BigDecimal("1.0"),
+                    price = BigDecimal("10.00")
+                )
+            ),
         pickupLocation: Location? = Location(40.7000, -74.0000),
         notes: String? = "Test notes",
         timeWindowStart: LocalDateTime = LocalDateTime.now(),
         timeWindowEnd: LocalDateTime = LocalDateTime.now().plusHours(2),
         serviceDurationMinutes: Int = 30,
         priority: Int = 0
-    ): Order {
-        return Order(
+    ): Order =
+        Order(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
-            customer = Customer(
-                id = UUID.randomUUID(),
-                organizationId = UUID.randomUUID(),
-                name = "Test Customer",
-                phoneNumber = "+1234567890",
-                email = "test@example.com",
-                location = Location(40.7128, -74.0060)
-            ),
+            customer =
+                Customer(
+                    id = UUID.randomUUID(),
+                    organizationId = UUID.randomUUID(),
+                    name = "Test Customer",
+                    phoneNumber = "+1234567890",
+                    email = "test@example.com",
+                    location = Location(40.7128, -74.0060)
+                ),
             lineItems = lineItems,
             pickupLocation = pickupLocation,
             deliveryLocation = Location(40.7589, -73.9851),
@@ -193,5 +196,4 @@ class OrderTest {
             notes = notes,
             createdAt = LocalDateTime.now()
         )
-    }
 }

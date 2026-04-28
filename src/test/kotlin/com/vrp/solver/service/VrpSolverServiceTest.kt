@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 class VrpSolverServiceTest {
-
     private lateinit var solverManager: SolverManager<VrpSolution>
     private lateinit var service: VrpSolverService
 

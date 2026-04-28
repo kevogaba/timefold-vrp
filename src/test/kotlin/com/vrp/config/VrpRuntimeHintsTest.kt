@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.aot.hint.RuntimeHints
 
 class VrpRuntimeHintsTest {
-
     @Test
     fun `should register solver config resource`() {
         val hints = RuntimeHints()

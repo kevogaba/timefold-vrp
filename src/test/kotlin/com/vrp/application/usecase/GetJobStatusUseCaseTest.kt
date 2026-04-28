@@ -13,7 +13,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 class GetJobStatusUseCaseTest {
-
     private val jobRepository = mockk<VrpJobRepository>()
     private val useCase = GetJobStatusUseCase(jobRepository)
 
@@ -22,15 +21,16 @@ class GetJobStatusUseCaseTest {
         val jobId = UUID.randomUUID()
         val organizationId = UUID.randomUUID()
 
-        val job = VrpJob(
-            id = jobId,
-            organizationId = organizationId,
-            status = JobStatus.COMPLETED,
-            orderIds = listOf(UUID.randomUUID()),
-            vehicleIds = listOf(UUID.randomUUID()),
-            hardScore = 0,
-            softScore = -1000
-        )
+        val job =
+            VrpJob(
+                id = jobId,
+                organizationId = organizationId,
+                status = JobStatus.COMPLETED,
+                orderIds = listOf(UUID.randomUUID()),
+                vehicleIds = listOf(UUID.randomUUID()),
+                hardScore = 0,
+                softScore = -1000
+            )
 
         every { jobRepository.findById(jobId, organizationId) } returns job
 

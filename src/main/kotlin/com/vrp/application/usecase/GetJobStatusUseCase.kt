@@ -10,9 +10,9 @@ import java.util.UUID
 class GetJobStatusUseCase(
     private val jobRepository: VrpJobRepository
 ) {
-
     @Cacheable(value = ["jobStatus"], key = "#jobId + '-' + #organizationId")
-    fun execute(jobId: UUID, organizationId: UUID): VrpJob? {
-        return jobRepository.findById(jobId, organizationId)
-    }
+    fun execute(
+        jobId: UUID,
+        organizationId: UUID
+    ): VrpJob? = jobRepository.findById(jobId, organizationId)
 }

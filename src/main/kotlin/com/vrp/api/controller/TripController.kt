@@ -16,7 +16,6 @@ class TripController(
     private val dtoMapper: ApiDtoMapper,
     private val jwtOrgIdExtractor: JwtOrgIdExtractor
 ) {
-
     @GetMapping("/{id}")
     fun getTrip(
         @PathVariable id: UUID,
@@ -24,8 +23,9 @@ class TripController(
     ): ResponseEntity<TripResponse> {
         val organizationId = jwtOrgIdExtractor.extractOrganizationId(authentication)
 
-        val trip = getTripUseCase.execute(id, organizationId)
-            ?: return ResponseEntity.notFound().build()
+        val trip =
+            getTripUseCase.execute(id, organizationId)
+                ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(dtoMapper.toTripResponse(trip))
     }

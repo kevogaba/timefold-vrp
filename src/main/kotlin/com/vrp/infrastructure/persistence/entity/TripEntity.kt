@@ -13,29 +13,21 @@ import java.util.UUID
 data class TripEntity(
     @Id
     val id: UUID = UUID.randomUUID(),
-
     @Column(nullable = false, unique = true)
     val guid: UUID = UuidCreator.getTimeOrderedEpoch(),
-
     @Column(nullable = false)
     val organizationId: UUID,
-
     @Column(nullable = false)
     val jobId: UUID,
-
     @Column(nullable = false)
     val vehicleId: UUID,
-
     @OneToMany(mappedBy = "trip", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     @OrderBy("sequenceNumber ASC")
     val visits: MutableList<VisitEntity> = mutableListOf(),
-
     @Column(nullable = false)
     val totalDistanceMeters: Long,
-
     @Column(nullable = false)
     val totalDurationMinutes: Int,
-
     @CreatedDate
     @Column(nullable = false, updatable = false)
     val createdAt: LocalDateTime = LocalDateTime.now()

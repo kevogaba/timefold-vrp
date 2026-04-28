@@ -12,7 +12,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class ApiDtoMapperTest {
-
     private lateinit var mapper: ApiDtoMapper
 
     @BeforeEach
@@ -26,19 +25,20 @@ class ApiDtoMapperTest {
         val createdAt = LocalDateTime.now()
         val completedAt = createdAt.plusMinutes(5)
 
-        val job = VrpJob(
-            id = jobId,
-            organizationId = UUID.randomUUID(),
-            orderIds = listOf(UUID.randomUUID()),
-            vehicleIds = listOf(UUID.randomUUID()),
-            status = JobStatus.COMPLETED,
-            hardScore = 0,
-            softScore = -1000,
-            errorMessage = null,
-            createdAt = createdAt,
-            startedAt = createdAt.plusSeconds(1),
-            completedAt = completedAt
-        )
+        val job =
+            VrpJob(
+                id = jobId,
+                organizationId = UUID.randomUUID(),
+                orderIds = listOf(UUID.randomUUID()),
+                vehicleIds = listOf(UUID.randomUUID()),
+                status = JobStatus.COMPLETED,
+                hardScore = 0,
+                softScore = -1000,
+                errorMessage = null,
+                createdAt = createdAt,
+                startedAt = createdAt.plusSeconds(1),
+                completedAt = completedAt
+            )
 
         val response = mapper.toJobResponse(job)
 
@@ -53,19 +53,20 @@ class ApiDtoMapperTest {
 
     @Test
     fun `should map pending job to JobResponse`() {
-        val job = VrpJob(
-            id = UUID.randomUUID(),
-            organizationId = UUID.randomUUID(),
-            orderIds = listOf(UUID.randomUUID()),
-            vehicleIds = listOf(UUID.randomUUID()),
-            status = JobStatus.PENDING,
-            hardScore = null,
-            softScore = null,
-            errorMessage = null,
-            createdAt = LocalDateTime.now(),
-            startedAt = null,
-            completedAt = null
-        )
+        val job =
+            VrpJob(
+                id = UUID.randomUUID(),
+                organizationId = UUID.randomUUID(),
+                orderIds = listOf(UUID.randomUUID()),
+                vehicleIds = listOf(UUID.randomUUID()),
+                status = JobStatus.PENDING,
+                hardScore = null,
+                softScore = null,
+                errorMessage = null,
+                createdAt = LocalDateTime.now(),
+                startedAt = null,
+                completedAt = null
+            )
 
         val response = mapper.toJobResponse(job)
 
@@ -78,19 +79,20 @@ class ApiDtoMapperTest {
     @Test
     fun `should map failed job to JobResponse with error message`() {
         val errorMessage = "Solver timeout"
-        val job = VrpJob(
-            id = UUID.randomUUID(),
-            organizationId = UUID.randomUUID(),
-            orderIds = listOf(UUID.randomUUID()),
-            vehicleIds = listOf(UUID.randomUUID()),
-            status = JobStatus.FAILED,
-            hardScore = null,
-            softScore = null,
-            errorMessage = errorMessage,
-            createdAt = LocalDateTime.now(),
-            startedAt = LocalDateTime.now(),
-            completedAt = LocalDateTime.now()
-        )
+        val job =
+            VrpJob(
+                id = UUID.randomUUID(),
+                organizationId = UUID.randomUUID(),
+                orderIds = listOf(UUID.randomUUID()),
+                vehicleIds = listOf(UUID.randomUUID()),
+                status = JobStatus.FAILED,
+                hardScore = null,
+                softScore = null,
+                errorMessage = errorMessage,
+                createdAt = LocalDateTime.now(),
+                startedAt = LocalDateTime.now(),
+                completedAt = LocalDateTime.now()
+            )
 
         val response = mapper.toJobResponse(job)
 
@@ -106,33 +108,35 @@ class ApiDtoMapperTest {
         val orderId1 = UUID.randomUUID()
         val orderId2 = UUID.randomUUID()
 
-        val trip = Trip(
-            id = tripId,
-            organizationId = UUID.randomUUID(),
-            jobId = jobId,
-            vehicleId = vehicleId,
-            visits = listOf(
-                Visit(
-                    id = UUID.randomUUID(),
-                    orderId = orderId1,
-                    location = Location(40.7589, -73.9851),
-                    arrivalTime = LocalDateTime.of(2024, 1, 1, 10, 0),
-                    departureTime = LocalDateTime.of(2024, 1, 1, 10, 30),
-                    sequenceNumber = 0
-                ),
-                Visit(
-                    id = UUID.randomUUID(),
-                    orderId = orderId2,
-                    location = Location(40.7128, -74.0060),
-                    arrivalTime = LocalDateTime.of(2024, 1, 1, 11, 0),
-                    departureTime = LocalDateTime.of(2024, 1, 1, 11, 30),
-                    sequenceNumber = 1
-                )
-            ),
-            totalDistanceMeters = 15000L,
-            totalDurationMinutes = 90,
-            createdAt = LocalDateTime.now()
-        )
+        val trip =
+            Trip(
+                id = tripId,
+                organizationId = UUID.randomUUID(),
+                jobId = jobId,
+                vehicleId = vehicleId,
+                visits =
+                    listOf(
+                        Visit(
+                            id = UUID.randomUUID(),
+                            orderId = orderId1,
+                            location = Location(40.7589, -73.9851),
+                            arrivalTime = LocalDateTime.of(2024, 1, 1, 10, 0),
+                            departureTime = LocalDateTime.of(2024, 1, 1, 10, 30),
+                            sequenceNumber = 0
+                        ),
+                        Visit(
+                            id = UUID.randomUUID(),
+                            orderId = orderId2,
+                            location = Location(40.7128, -74.0060),
+                            arrivalTime = LocalDateTime.of(2024, 1, 1, 11, 0),
+                            departureTime = LocalDateTime.of(2024, 1, 1, 11, 30),
+                            sequenceNumber = 1
+                        )
+                    ),
+                totalDistanceMeters = 15000L,
+                totalDurationMinutes = 90,
+                createdAt = LocalDateTime.now()
+            )
 
         val response = mapper.toTripResponse(trip)
 
@@ -158,16 +162,17 @@ class ApiDtoMapperTest {
 
     @Test
     fun `should map trip with empty visits list`() {
-        val trip = Trip(
-            id = UUID.randomUUID(),
-            organizationId = UUID.randomUUID(),
-            jobId = UUID.randomUUID(),
-            vehicleId = UUID.randomUUID(),
-            visits = emptyList(),
-            totalDistanceMeters = 0L,
-            totalDurationMinutes = 0,
-            createdAt = LocalDateTime.now()
-        )
+        val trip =
+            Trip(
+                id = UUID.randomUUID(),
+                organizationId = UUID.randomUUID(),
+                jobId = UUID.randomUUID(),
+                vehicleId = UUID.randomUUID(),
+                visits = emptyList(),
+                totalDistanceMeters = 0L,
+                totalDurationMinutes = 0,
+                createdAt = LocalDateTime.now()
+            )
 
         val response = mapper.toTripResponse(trip)
 

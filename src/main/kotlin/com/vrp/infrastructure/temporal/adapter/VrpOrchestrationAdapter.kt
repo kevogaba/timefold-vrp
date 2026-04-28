@@ -16,38 +16,39 @@ class VrpOrchestrationAdapter(
     @Value("\${temporal.task-queue:vrp-task-queue}")
     private val taskQueue: String
 ) : VrpOrchestrationPort {
-
     override fun startSolveWorkflow(job: VrpJob): String {
         val workflowId = "vrp-solve-${job.id}"
 
-        val options = WorkflowOptions.newBuilder()
-            .setWorkflowId(workflowId)
-            .setTaskQueue(taskQueue)
-            .setWorkflowExecutionTimeout(Duration.ofMinutes(15))
-            .build()
+        val options =
+            WorkflowOptions
+                .newBuilder()
+                .setWorkflowId(workflowId)
+                .setTaskQueue(taskQueue)
+                .setWorkflowExecutionTimeout(Duration.ofMinutes(15))
+                .build()
 
         val workflow = workflowClient.newWorkflowStub(VrpSolveWorkflow::class.java, options)
 
-        val input = VrpJobInput(
-            jobId = job.id,
-            organizationId = job.organizationId,
-            orderIds = job.orderIds,
-            vehicleIds = job.vehicleIds
-        )
+        val input =
+            VrpJobInput(
+                jobId = job.id,
+                organizationId = job.organizationId,
+                orderIds = job.orderIds,
+                vehicleIds = job.vehicleIds
+            )
 
         WorkflowClient.start(workflow::solve, input)
 
         return workflowId
     }
 
-    override fun queryWorkflowStatus(workflowId: String): String? {
-        return try {
+    override fun queryWorkflowStatus(workflowId: String): String? =
+        try {
             val workflow = workflowClient.newWorkflowStub(VrpSolveWorkflow::class.java, workflowId)
             workflow.getStatus()
         } catch (e: Exception) {
             null
         }
-    }
 
     override fun cancelWorkflow(workflowId: String) {
         workflowClient.newUntypedWorkflowStub(workflowId).cancel()

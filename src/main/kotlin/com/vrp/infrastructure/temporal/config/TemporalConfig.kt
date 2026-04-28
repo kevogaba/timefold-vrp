@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class TemporalConfig {
-
     @Value("\${temporal.target:localhost:7233}")
     private lateinit var temporalTarget: String
 
@@ -23,33 +22,29 @@ class TemporalConfig {
     private lateinit var taskQueue: String
 
     @Bean
-    fun workflowServiceStubs(): WorkflowServiceStubs {
-        return WorkflowServiceStubs.newServiceStubs(
-            WorkflowServiceStubsOptions.newBuilder()
+    fun workflowServiceStubs(): WorkflowServiceStubs =
+        WorkflowServiceStubs.newServiceStubs(
+            WorkflowServiceStubsOptions
+                .newBuilder()
                 .setTarget(temporalTarget)
                 .build()
         )
-    }
 
     @Bean
-    fun workflowClient(serviceStubs: WorkflowServiceStubs): WorkflowClient {
-        return WorkflowClient.newInstance(
+    fun workflowClient(serviceStubs: WorkflowServiceStubs): WorkflowClient =
+        WorkflowClient.newInstance(
             serviceStubs,
-            WorkflowClientOptions.newBuilder()
+            WorkflowClientOptions
+                .newBuilder()
                 .setNamespace(namespace)
                 .build()
         )
-    }
 
     @Bean
-    fun workerFactory(workflowClient: WorkflowClient): WorkerFactory {
-        return WorkerFactory.newInstance(workflowClient)
-    }
+    fun workerFactory(workflowClient: WorkflowClient): WorkerFactory = WorkerFactory.newInstance(workflowClient)
 
     @Bean
-    fun worker(workerFactory: WorkerFactory): Worker {
-        return workerFactory.newWorker(taskQueue)
-    }
+    fun worker(workerFactory: WorkerFactory): Worker = workerFactory.newWorker(taskQueue)
 
     @Bean
     fun taskQueue(): String = taskQueue

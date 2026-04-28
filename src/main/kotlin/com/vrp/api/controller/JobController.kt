@@ -20,7 +20,6 @@ class JobController(
     private val dtoMapper: ApiDtoMapper,
     private val jwtOrgIdExtractor: JwtOrgIdExtractor
 ) {
-
     @PostMapping
     fun submitJob(
         @RequestBody request: SubmitJobRequest,
@@ -42,8 +41,9 @@ class JobController(
     ): ResponseEntity<JobResponse> {
         val organizationId = jwtOrgIdExtractor.extractOrganizationId(authentication)
 
-        val job = getJobStatusUseCase.execute(id, organizationId)
-            ?: return ResponseEntity.notFound().build()
+        val job =
+            getJobStatusUseCase.execute(id, organizationId)
+                ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(dtoMapper.toJobResponse(job))
     }

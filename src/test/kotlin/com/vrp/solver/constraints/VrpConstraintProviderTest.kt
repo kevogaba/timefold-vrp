@@ -15,7 +15,6 @@ import java.util.UUID
  * Tests the constraint provider's calculation methods directly.
  */
 class VrpConstraintProviderTest {
-
     private val constraintProvider = VrpConstraintProvider()
 
     @Test
@@ -23,10 +22,11 @@ class VrpConstraintProviderTest {
         val vehicle = createVehicle()
 
         // Access private method via reflection for testing
-        val method = VrpConstraintProvider::class.java.getDeclaredMethod(
-            "calculateTotalDistance",
-            SolverVehicle::class.java
-        )
+        val method =
+            VrpConstraintProvider::class.java.getDeclaredMethod(
+                "calculateTotalDistance",
+                SolverVehicle::class.java
+            )
         method.isAccessible = true
 
         val distance = method.invoke(constraintProvider, vehicle) as Long
@@ -40,18 +40,20 @@ class VrpConstraintProviderTest {
         val visitLocation = Location(40.7589, -73.9851)
         val endLocation = Location(40.7128, -74.0060)
 
-        val vehicle = createVehicle(
-            startLocation = startLocation,
-            endLocation = endLocation
-        )
+        val vehicle =
+            createVehicle(
+                startLocation = startLocation,
+                endLocation = endLocation
+            )
 
         val visit = createVisit(location = visitLocation)
         vehicle.visits.add(visit)
 
-        val method = VrpConstraintProvider::class.java.getDeclaredMethod(
-            "calculateTotalDistance",
-            SolverVehicle::class.java
-        )
+        val method =
+            VrpConstraintProvider::class.java.getDeclaredMethod(
+                "calculateTotalDistance",
+                SolverVehicle::class.java
+            )
         method.isAccessible = true
 
         val distance = method.invoke(constraintProvider, vehicle) as Long
@@ -88,19 +90,24 @@ class VrpConstraintProviderTest {
 
     @Test
     fun `should allow visits within capacity limits`() {
-        val vehicle = createVehicle(
-            weightCapacity = BigDecimal("200.0"),
-            volumeCapacity = BigDecimal("50.0")
-        )
+        val vehicle =
+            createVehicle(
+                weightCapacity = BigDecimal("200.0"),
+                volumeCapacity = BigDecimal("50.0")
+            )
 
-        vehicle.visits.add(createVisit(
-            demandWeight = BigDecimal("80.0"),
-            demandVolume = BigDecimal("20.0")
-        ))
-        vehicle.visits.add(createVisit(
-            demandWeight = BigDecimal("60.0"),
-            demandVolume = BigDecimal("15.0")
-        ))
+        vehicle.visits.add(
+            createVisit(
+                demandWeight = BigDecimal("80.0"),
+                demandVolume = BigDecimal("20.0")
+            )
+        )
+        vehicle.visits.add(
+            createVisit(
+                demandWeight = BigDecimal("60.0"),
+                demandVolume = BigDecimal("15.0")
+            )
+        )
 
         val totalWeight = vehicle.visits.sumOf { it.demandWeight }
         val totalVolume = vehicle.visits.sumOf { it.demandVolume }
@@ -114,17 +121,19 @@ class VrpConstraintProviderTest {
         val orderId = UUID.randomUUID()
         val vehicle = createVehicle()
 
-        val delivery = createVisit(
-            orderId = orderId,
-            isPickup = false,
-            isDelivery = true
-        )
+        val delivery =
+            createVisit(
+                orderId = orderId,
+                isPickup = false,
+                isDelivery = true
+            )
 
-        val pickup = createVisit(
-            orderId = orderId,
-            isPickup = true,
-            isDelivery = false
-        )
+        val pickup =
+            createVisit(
+                orderId = orderId,
+                isPickup = true,
+                isDelivery = false
+            )
 
         // Wrong order - delivery before pickup
         vehicle.visits.add(delivery)
@@ -144,17 +153,19 @@ class VrpConstraintProviderTest {
         val orderId = UUID.randomUUID()
         val vehicle = createVehicle()
 
-        val pickup = createVisit(
-            orderId = orderId,
-            isPickup = true,
-            isDelivery = false
-        )
+        val pickup =
+            createVisit(
+                orderId = orderId,
+                isPickup = true,
+                isDelivery = false
+            )
 
-        val delivery = createVisit(
-            orderId = orderId,
-            isPickup = false,
-            isDelivery = true
-        )
+        val delivery =
+            createVisit(
+                orderId = orderId,
+                isPickup = false,
+                isDelivery = true
+            )
 
         // Correct order - pickup before delivery
         vehicle.visits.add(pickup)
@@ -201,8 +212,8 @@ class VrpConstraintProviderTest {
         volumeCapacity: BigDecimal = BigDecimal("100.0"),
         startLocation: Location = Location(40.7128, -74.0060),
         endLocation: Location = Location(40.7128, -74.0060)
-    ): SolverVehicle {
-        return SolverVehicle(
+    ): SolverVehicle =
+        SolverVehicle(
             id = UUID.randomUUID(),
             name = "Test Vehicle",
             weightCapacity = weightCapacity,
@@ -214,7 +225,6 @@ class VrpConstraintProviderTest {
             costPerKm = BigDecimal("0.50"),
             visits = mutableListOf()
         )
-    }
 
     private fun createVisit(
         orderId: UUID = UUID.randomUUID(),
@@ -226,8 +236,8 @@ class VrpConstraintProviderTest {
         serviceDurationMinutes: Int = 30,
         isPickup: Boolean = false,
         isDelivery: Boolean = true
-    ): SolverVisit {
-        return SolverVisit(
+    ): SolverVisit =
+        SolverVisit(
             id = UUID.randomUUID(),
             orderId = orderId,
             location = location,
@@ -239,5 +249,4 @@ class VrpConstraintProviderTest {
             isPickup = isPickup,
             isDelivery = isDelivery
         )
-    }
 }

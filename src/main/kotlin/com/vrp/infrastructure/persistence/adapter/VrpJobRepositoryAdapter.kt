@@ -20,7 +20,6 @@ class VrpJobRepositoryAdapter(
     private val vehicleJpaRepository: VehicleJpaRepository,
     private val mapper: VrpJobMapper
 ) : VrpJobRepository {
-
     override fun save(job: VrpJob): VrpJob {
         val entity = mapper.toEntity(job)
 
@@ -35,17 +34,24 @@ class VrpJobRepositoryAdapter(
         return mapper.toDomain(saved)
     }
 
-    override fun findById(id: UUID, organizationId: UUID): VrpJob? {
-        return jpaRepository.findByIdAndOrganizationId(id, organizationId)
+    override fun findById(
+        id: UUID,
+        organizationId: UUID
+    ): VrpJob? =
+        jpaRepository
+            .findByIdAndOrganizationId(id, organizationId)
             ?.let { mapper.toDomain(it) }
-    }
 
-    override fun findAllByOrganizationId(organizationId: UUID): List<VrpJob> {
-        return jpaRepository.findAllByOrganizationId(organizationId)
+    override fun findAllByOrganizationId(organizationId: UUID): List<VrpJob> =
+        jpaRepository
+            .findAllByOrganizationId(organizationId)
             .map { mapper.toDomain(it) }
-    }
 
-    override fun updateStatus(id: UUID, status: JobStatus, organizationId: UUID): VrpJob? {
+    override fun updateStatus(
+        id: UUID,
+        status: JobStatus,
+        organizationId: UUID
+    ): VrpJob? {
         val entity = jpaRepository.findByIdAndOrganizationId(id, organizationId) ?: return null
         entity.status = status
 

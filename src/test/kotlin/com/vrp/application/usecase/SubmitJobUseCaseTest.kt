@@ -13,7 +13,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class SubmitJobUseCaseTest {
-
     private val jobRepository = mockk<VrpJobRepository>()
     private val orchestrationPort = mockk<VrpOrchestrationPort>()
     private val useCase = SubmitJobUseCase(jobRepository, orchestrationPort)
@@ -25,13 +24,14 @@ class SubmitJobUseCaseTest {
         val vehicleIds = listOf(UUID.randomUUID())
         val workflowId = "vrp-solve-123"
 
-        val pendingJob = VrpJob(
-            id = UUID.randomUUID(),
-            organizationId = organizationId,
-            status = JobStatus.PENDING,
-            orderIds = orderIds,
-            vehicleIds = vehicleIds
-        )
+        val pendingJob =
+            VrpJob(
+                id = UUID.randomUUID(),
+                organizationId = organizationId,
+                status = JobStatus.PENDING,
+                orderIds = orderIds,
+                vehicleIds = vehicleIds
+            )
 
         val runningJob = pendingJob.copy(status = JobStatus.RUNNING)
 

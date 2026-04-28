@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class TripTest {
-
     @Test
     fun `should create trip with visits`() {
         val id = UUID.randomUUID()
@@ -15,26 +14,28 @@ class TripTest {
         val jobId = UUID.randomUUID()
         val vehicleId = UUID.randomUUID()
 
-        val visits = listOf(
-            Visit(
-                id = UUID.randomUUID(),
-                orderId = UUID.randomUUID(),
-                location = Location(40.7589, -73.9851),
-                arrivalTime = LocalDateTime.of(2024, 1, 1, 10, 0),
-                departureTime = LocalDateTime.of(2024, 1, 1, 10, 30),
-                sequenceNumber = 0
+        val visits =
+            listOf(
+                Visit(
+                    id = UUID.randomUUID(),
+                    orderId = UUID.randomUUID(),
+                    location = Location(40.7589, -73.9851),
+                    arrivalTime = LocalDateTime.of(2024, 1, 1, 10, 0),
+                    departureTime = LocalDateTime.of(2024, 1, 1, 10, 30),
+                    sequenceNumber = 0
+                )
             )
-        )
 
-        val trip = Trip(
-            id = id,
-            organizationId = organizationId,
-            jobId = jobId,
-            vehicleId = vehicleId,
-            visits = visits,
-            totalDistanceMeters = 15000L,
-            totalDurationMinutes = 90
-        )
+        val trip =
+            Trip(
+                id = id,
+                organizationId = organizationId,
+                jobId = jobId,
+                vehicleId = vehicleId,
+                visits = visits,
+                totalDistanceMeters = 15000L,
+                totalDurationMinutes = 90
+            )
 
         assertThat(trip.id).isEqualTo(id)
         assertThat(trip.organizationId).isEqualTo(organizationId)
@@ -79,7 +80,6 @@ class TripTest {
 }
 
 class VisitTest {
-
     @Test
     fun `should create visit with all properties`() {
         val id = UUID.randomUUID()
@@ -88,14 +88,15 @@ class VisitTest {
         val arrivalTime = LocalDateTime.of(2024, 1, 1, 10, 0)
         val departureTime = LocalDateTime.of(2024, 1, 1, 10, 30)
 
-        val visit = Visit(
-            id = id,
-            orderId = orderId,
-            location = location,
-            arrivalTime = arrivalTime,
-            departureTime = departureTime,
-            sequenceNumber = 0
-        )
+        val visit =
+            Visit(
+                id = id,
+                orderId = orderId,
+                location = location,
+                arrivalTime = arrivalTime,
+                departureTime = departureTime,
+                sequenceNumber = 0
+            )
 
         assertThat(visit.id).isEqualTo(id)
         assertThat(visit.orderId).isEqualTo(orderId)
@@ -139,14 +140,15 @@ class VisitTest {
     fun `should allow departure time equal to arrival time`() {
         val time = LocalDateTime.of(2024, 1, 1, 10, 0)
 
-        val visit = Visit(
-            id = UUID.randomUUID(),
-            orderId = UUID.randomUUID(),
-            location = Location(40.7589, -73.9851),
-            arrivalTime = time,
-            departureTime = time,
-            sequenceNumber = 0
-        )
+        val visit =
+            Visit(
+                id = UUID.randomUUID(),
+                orderId = UUID.randomUUID(),
+                location = Location(40.7589, -73.9851),
+                arrivalTime = time,
+                departureTime = time,
+                sequenceNumber = 0
+            )
 
         assertThat(visit.arrivalTime).isEqualTo(visit.departureTime)
     }

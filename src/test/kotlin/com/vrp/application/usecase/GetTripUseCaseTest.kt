@@ -14,7 +14,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class GetTripUseCaseTest {
-
     private lateinit var tripRepository: TripRepository
     private lateinit var useCase: GetTripUseCase
 
@@ -57,10 +56,11 @@ class GetTripUseCaseTest {
     fun `should get trips by job id`() {
         val organizationId = UUID.randomUUID()
         val jobId = UUID.randomUUID()
-        val trips = listOf(
-            createTrip(jobId = jobId, organizationId = organizationId),
-            createTrip(jobId = jobId, organizationId = organizationId)
-        )
+        val trips =
+            listOf(
+                createTrip(jobId = jobId, organizationId = organizationId),
+                createTrip(jobId = jobId, organizationId = organizationId)
+            )
 
         every { tripRepository.findAllByJobId(jobId, organizationId) } returns trips
 
@@ -89,25 +89,25 @@ class GetTripUseCaseTest {
         tripId: UUID = UUID.randomUUID(),
         organizationId: UUID = UUID.randomUUID(),
         jobId: UUID = UUID.randomUUID()
-    ): Trip {
-        return Trip(
+    ): Trip =
+        Trip(
             id = tripId,
             organizationId = organizationId,
             jobId = jobId,
             vehicleId = UUID.randomUUID(),
-            visits = listOf(
-                Visit(
-                    id = UUID.randomUUID(),
-                    orderId = UUID.randomUUID(),
-                    location = Location(40.7589, -73.9851),
-                    arrivalTime = LocalDateTime.now(),
-                    departureTime = LocalDateTime.now().plusMinutes(30),
-                    sequenceNumber = 0
-                )
-            ),
+            visits =
+                listOf(
+                    Visit(
+                        id = UUID.randomUUID(),
+                        orderId = UUID.randomUUID(),
+                        location = Location(40.7589, -73.9851),
+                        arrivalTime = LocalDateTime.now(),
+                        departureTime = LocalDateTime.now().plusMinutes(30),
+                        sequenceNumber = 0
+                    )
+                ),
             totalDistanceMeters = 10000L,
             totalDurationMinutes = 60,
             createdAt = LocalDateTime.now()
         )
-    }
 }

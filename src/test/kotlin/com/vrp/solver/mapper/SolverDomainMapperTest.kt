@@ -10,7 +10,6 @@ import java.time.LocalTime
 import java.util.UUID
 
 class SolverDomainMapperTest {
-
     private val distanceCalculator = EuclideanDistanceCalculator()
     private val mapper = SolverDomainMapper(distanceCalculator)
 
@@ -30,19 +29,21 @@ class SolverDomainMapperTest {
 
     @Test
     fun `should create visits from orders with correct properties`() {
-        val order = createOrder(
-            deliveryLocation = Location(40.7589, -73.9851),
-            lineItems = listOf(
-                LineItem(
-                    id = UUID.randomUUID(),
-                    name = "Item 1",
-                    quantity = 2,
-                    weight = BigDecimal("10.0"),
-                    volume = BigDecimal("2.0"),
-                    price = BigDecimal("50.00")
-                )
+        val order =
+            createOrder(
+                deliveryLocation = Location(40.7589, -73.9851),
+                lineItems =
+                    listOf(
+                        LineItem(
+                            id = UUID.randomUUID(),
+                            name = "Item 1",
+                            quantity = 2,
+                            weight = BigDecimal("10.0"),
+                            volume = BigDecimal("2.0"),
+                            price = BigDecimal("50.00")
+                        )
+                    )
             )
-        )
 
         val solution = mapper.toSolverSolution(UUID.randomUUID(), listOf(order), listOf(createVehicle()))
 
@@ -57,13 +58,14 @@ class SolverDomainMapperTest {
 
     @Test
     fun `should create solver vehicles with correct properties`() {
-        val vehicle = createVehicle(
-            name = "Van 1",
-            weightCapacity = BigDecimal("1000.0"),
-            volumeCapacity = BigDecimal("50.0"),
-            startLocation = Location(40.7128, -74.0060),
-            endLocation = Location(40.7589, -73.9851)
-        )
+        val vehicle =
+            createVehicle(
+                name = "Van 1",
+                weightCapacity = BigDecimal("1000.0"),
+                volumeCapacity = BigDecimal("50.0"),
+                startLocation = Location(40.7128, -74.0060),
+                endLocation = Location(40.7589, -73.9851)
+            )
 
         val solution = mapper.toSolverSolution(UUID.randomUUID(), listOf(createOrder()), listOf(vehicle))
 
@@ -79,15 +81,17 @@ class SolverDomainMapperTest {
 
     @Test
     fun `should handle multiple orders and vehicles`() {
-        val orders = listOf(
-            createOrder(),
-            createOrder(),
-            createOrder()
-        )
-        val vehicles = listOf(
-            createVehicle(name = "Van 1"),
-            createVehicle(name = "Van 2")
-        )
+        val orders =
+            listOf(
+                createOrder(),
+                createOrder(),
+                createOrder()
+            )
+        val vehicles =
+            listOf(
+                createVehicle(name = "Van 1"),
+                createVehicle(name = "Van 2")
+            )
 
         val solution = mapper.toSolverSolution(UUID.randomUUID(), orders, vehicles)
 
@@ -100,11 +104,12 @@ class SolverDomainMapperTest {
         val organizationId = UUID.randomUUID()
         val jobId = UUID.randomUUID()
 
-        val solution = mapper.toSolverSolution(
-            jobId,
-            listOf(createOrder()),
-            listOf(createVehicle())
-        )
+        val solution =
+            mapper.toSolverSolution(
+                jobId,
+                listOf(createOrder()),
+                listOf(createVehicle())
+            )
 
         // Assign visit to vehicle (simulate solver result)
         val vehicle = solution.vehicles.first()
@@ -127,11 +132,12 @@ class SolverDomainMapperTest {
         val organizationId = UUID.randomUUID()
         val jobId = UUID.randomUUID()
 
-        val solution = mapper.toSolverSolution(
-            jobId,
-            listOf(createOrder()),
-            listOf(createVehicle(), createVehicle())
-        )
+        val solution =
+            mapper.toSolverSolution(
+                jobId,
+                listOf(createOrder()),
+                listOf(createVehicle(), createVehicle())
+            )
 
         // Assign visit to only first vehicle
         solution.vehicles[0].visits.add(solution.visits.first())
@@ -147,11 +153,12 @@ class SolverDomainMapperTest {
         val organizationId = UUID.randomUUID()
         val jobId = UUID.randomUUID()
 
-        val solution = mapper.toSolverSolution(
-            jobId,
-            listOf(createOrder(), createOrder(), createOrder()),
-            listOf(createVehicle())
-        )
+        val solution =
+            mapper.toSolverSolution(
+                jobId,
+                listOf(createOrder(), createOrder(), createOrder()),
+                listOf(createVehicle())
+            )
 
         val vehicle = solution.vehicles.first()
         vehicle.visits.addAll(solution.visits)
@@ -174,15 +181,19 @@ class SolverDomainMapperTest {
         val visitLocation = Location(40.7589, -73.9851)
         val endLocation = Location(40.7128, -74.0060)
 
-        val vehicle = createVehicle(
-            startLocation = startLocation,
-            endLocation = endLocation
-        )
+        val vehicle =
+            createVehicle(
+                startLocation = startLocation,
+                endLocation = endLocation
+            )
 
         val order = createOrder(deliveryLocation = visitLocation)
 
         val solution = mapper.toSolverSolution(jobId, listOf(order), listOf(vehicle))
-        solution.vehicles.first().visits.add(solution.visits.first())
+        solution.vehicles
+            .first()
+            .visits
+            .add(solution.visits.first())
 
         val trips = mapper.toTrips(solution, organizationId, jobId)
 
@@ -193,7 +204,7 @@ class SolverDomainMapperTest {
         // 2. Visit -> End
         val expectedDistance =
             distanceCalculator.distanceBetween(startLocation, visitLocation) +
-            distanceCalculator.distanceBetween(visitLocation, endLocation)
+                distanceCalculator.distanceBetween(visitLocation, endLocation)
 
         assertThat(trip.totalDistanceMeters).isEqualTo(expectedDistance)
     }
@@ -205,7 +216,10 @@ class SolverDomainMapperTest {
 
         val order = createOrder(serviceDurationMinutes = 30)
         val solution = mapper.toSolverSolution(jobId, listOf(order), listOf(createVehicle()))
-        solution.vehicles.first().visits.add(solution.visits.first())
+        solution.vehicles
+            .first()
+            .visits
+            .add(solution.visits.first())
 
         val trips = mapper.toTrips(solution, organizationId, jobId)
 
@@ -218,28 +232,30 @@ class SolverDomainMapperTest {
     private fun createOrder(
         deliveryLocation: Location = Location(40.7589, -73.9851),
         serviceDurationMinutes: Int = 30,
-        lineItems: List<LineItem> = listOf(
-            LineItem(
-                id = UUID.randomUUID(),
-                name = "Test Item",
-                quantity = 1,
-                weight = BigDecimal("10.0"),
-                volume = BigDecimal("1.0"),
-                price = BigDecimal("100.00")
+        lineItems: List<LineItem> =
+            listOf(
+                LineItem(
+                    id = UUID.randomUUID(),
+                    name = "Test Item",
+                    quantity = 1,
+                    weight = BigDecimal("10.0"),
+                    volume = BigDecimal("1.0"),
+                    price = BigDecimal("100.00")
+                )
             )
-        )
-    ): Order {
-        return Order(
+    ): Order =
+        Order(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
-            customer = Customer(
-                id = UUID.randomUUID(),
-                organizationId = UUID.randomUUID(),
-                name = "Test Customer",
-                phoneNumber = "+1234567890",
-                email = "test@example.com",
-                location = Location(40.7128, -74.0060)
-            ),
+            customer =
+                Customer(
+                    id = UUID.randomUUID(),
+                    organizationId = UUID.randomUUID(),
+                    name = "Test Customer",
+                    phoneNumber = "+1234567890",
+                    email = "test@example.com",
+                    location = Location(40.7128, -74.0060)
+                ),
             lineItems = lineItems,
             pickupLocation = null,
             deliveryLocation = deliveryLocation,
@@ -250,7 +266,6 @@ class SolverDomainMapperTest {
             notes = null,
             createdAt = LocalDateTime.now()
         )
-    }
 
     private fun createVehicle(
         name: String = "Test Vehicle",
@@ -258,8 +273,8 @@ class SolverDomainMapperTest {
         volumeCapacity: BigDecimal = BigDecimal("50.0"),
         startLocation: Location = Location(40.7128, -74.0060),
         endLocation: Location = Location(40.7128, -74.0060)
-    ): Vehicle {
-        return Vehicle(
+    ): Vehicle =
+        Vehicle(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
             name = name,
@@ -273,5 +288,4 @@ class SolverDomainMapperTest {
             driver = null,
             costPerKm = BigDecimal("0.50")
         )
-    }
 }

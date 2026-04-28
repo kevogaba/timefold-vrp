@@ -7,7 +7,15 @@ import java.util.UUID
 
 @Repository
 interface TripJpaRepository : JpaRepository<TripEntity, UUID> {
-    fun findByIdAndOrganizationId(id: UUID, organizationId: UUID): TripEntity?
-    fun findAllByJobIdAndOrganizationId(jobId: UUID, organizationId: UUID): List<TripEntity>
+    fun findByIdAndOrganizationId(
+        id: UUID,
+        organizationId: UUID
+    ): TripEntity?
+
+    fun findAllByJobIdAndOrganizationId(
+        jobId: UUID,
+        organizationId: UUID
+    ): List<TripEntity>
+
     fun findAllByOrganizationId(organizationId: UUID): List<TripEntity>
 }

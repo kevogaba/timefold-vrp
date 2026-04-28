@@ -2,13 +2,12 @@ package com.vrp.infrastructure.cache.config
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.mock
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.serializer.RedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer
-import org.mockito.Mockito.mock
 
 class RedisConfigTest {
-
     private val redisConfig = RedisConfig()
 
     @Test

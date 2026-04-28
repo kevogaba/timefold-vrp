@@ -1,7 +1,6 @@
 package com.vrp.domain.port
 
 import com.vrp.domain.model.VrpJob
-import java.util.UUID
 
 /**
  * Port for VRP workflow orchestration.

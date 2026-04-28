@@ -10,7 +10,6 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 class SecurityConfig {
-
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
@@ -18,10 +17,11 @@ class SecurityConfig {
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { authorize ->
                 authorize
-                    .requestMatchers("/actuator/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                    .anyRequest().authenticated()
-            }
-            .oauth2ResourceServer { oauth2 ->
+                    .requestMatchers("/actuator/**", "/v3/api-docs/**", "/swagger-ui/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+            }.oauth2ResourceServer { oauth2 ->
                 oauth2.jwt { }
             }
 

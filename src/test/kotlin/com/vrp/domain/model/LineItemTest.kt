@@ -7,19 +7,19 @@ import java.math.BigDecimal
 import java.util.UUID
 
 class LineItemTest {
-
     @Test
     fun `should create line item with all properties`() {
         val id = UUID.randomUUID()
 
-        val lineItem = LineItem(
-            id = id,
-            name = "Widget",
-            quantity = 10,
-            weight = BigDecimal("5.5"),
-            volume = BigDecimal("2.0"),
-            price = BigDecimal("99.99")
-        )
+        val lineItem =
+            LineItem(
+                id = id,
+                name = "Widget",
+                quantity = 10,
+                weight = BigDecimal("5.5"),
+                volume = BigDecimal("2.0"),
+                price = BigDecimal("99.99")
+            )
 
         assertThat(lineItem.id).isEqualTo(id)
         assertThat(lineItem.name).isEqualTo("Widget")

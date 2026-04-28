@@ -7,15 +7,15 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class VrpJobEntityTest {
-
     @Test
     fun `should create VRP job with required fields`() {
         val organizationId = UUID.randomUUID()
 
-        val job = VrpJobEntity(
-            organizationId = organizationId,
-            status = JobStatus.PENDING
-        )
+        val job =
+            VrpJobEntity(
+                organizationId = organizationId,
+                status = JobStatus.PENDING
+            )
 
         assertThat(job.id).isNotNull()
         assertThat(job.guid).isNotNull()
@@ -32,10 +32,11 @@ class VrpJobEntityTest {
 
     @Test
     fun `should update job status and scores`() {
-        val job = VrpJobEntity(
-            organizationId = UUID.randomUUID(),
-            status = JobStatus.PENDING
-        )
+        val job =
+            VrpJobEntity(
+                organizationId = UUID.randomUUID(),
+                status = JobStatus.PENDING
+            )
 
         job.status = JobStatus.COMPLETED
         job.hardScore = 0
@@ -50,10 +51,11 @@ class VrpJobEntityTest {
 
     @Test
     fun `should handle failed job with error message`() {
-        val job = VrpJobEntity(
-            organizationId = UUID.randomUUID(),
-            status = JobStatus.PENDING
-        )
+        val job =
+            VrpJobEntity(
+                organizationId = UUID.randomUUID(),
+                status = JobStatus.PENDING
+            )
 
         job.status = JobStatus.FAILED
         job.errorMessage = "Solver failed to find solution"
@@ -64,12 +66,13 @@ class VrpJobEntityTest {
 
     @Test
     fun `should generate unique guid for each job`() {
-        val jobs = (1..5).map {
-            VrpJobEntity(
-                organizationId = UUID.randomUUID(),
-                status = JobStatus.PENDING
-            )
-        }
+        val jobs =
+            (1..5).map {
+                VrpJobEntity(
+                    organizationId = UUID.randomUUID(),
+                    status = JobStatus.PENDING
+                )
+            }
 
         val guids = jobs.map { it.guid }.toSet()
         assertThat(guids).hasSize(5)

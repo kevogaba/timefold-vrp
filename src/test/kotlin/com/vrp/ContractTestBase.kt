@@ -14,7 +14,6 @@ import org.springframework.web.context.WebApplicationContext
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ActiveProfiles("test")
 abstract class ContractTestBase {
-
     @Autowired
     private lateinit var webApplicationContext: WebApplicationContext
 

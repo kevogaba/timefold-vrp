@@ -9,5 +9,8 @@ interface DistanceCalculator {
     /**
      * Calculate distance between two locations in meters.
      */
-    fun distanceBetween(a: Location, b: Location): Long
+    fun distanceBetween(
+        a: Location,
+        b: Location
+    ): Long
 }

@@ -9,12 +9,13 @@ import java.util.UUID
 class GetTripUseCase(
     private val tripRepository: TripRepository
 ) {
+    fun execute(
+        tripId: UUID,
+        organizationId: UUID
+    ): Trip? = tripRepository.findById(tripId, organizationId)
 
-    fun execute(tripId: UUID, organizationId: UUID): Trip? {
-        return tripRepository.findById(tripId, organizationId)
-    }
-
-    fun getByJobId(jobId: UUID, organizationId: UUID): List<Trip> {
-        return tripRepository.findAllByJobId(jobId, organizationId)
-    }
+    fun getByJobId(
+        jobId: UUID,
+        organizationId: UUID
+    ): List<Trip> = tripRepository.findAllByJobId(jobId, organizationId)
 }

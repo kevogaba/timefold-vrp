@@ -9,9 +9,20 @@ import java.util.UUID
  */
 interface VrpJobRepository {
     fun save(job: VrpJob): VrpJob
-    fun findById(id: UUID, organizationId: UUID): VrpJob?
+
+    fun findById(
+        id: UUID,
+        organizationId: UUID
+    ): VrpJob?
+
     fun findAllByOrganizationId(organizationId: UUID): List<VrpJob>
-    fun updateStatus(id: UUID, status: JobStatus, organizationId: UUID): VrpJob?
+
+    fun updateStatus(
+        id: UUID,
+        status: JobStatus,
+        organizationId: UUID
+    ): VrpJob?
+
     fun updateWithScore(
         id: UUID,
         status: JobStatus,

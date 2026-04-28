@@ -51,6 +51,9 @@ jobs:
       - name: Validate Docker Compose
         run: docker compose config --quiet
 
+      - name: Run linting
+        run: ./gradlew ktlintCheck --no-daemon
+
       - name: Build with Gradle
         run: ./gradlew build --no-daemon
 

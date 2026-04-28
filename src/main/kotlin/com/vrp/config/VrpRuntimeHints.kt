@@ -10,7 +10,10 @@ import org.springframework.context.annotation.ImportRuntimeHints
  * This is required to ensure resources like solverConfig.xml are available at runtime.
  */
 class VrpRuntimeHints : RuntimeHintsRegistrar {
-    override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
+    override fun registerHints(
+        hints: RuntimeHints,
+        classLoader: ClassLoader?
+    ) {
         // Register Timefold Solver configuration XML as a resource
         hints.resources().registerPattern("solverConfig.xml")
 

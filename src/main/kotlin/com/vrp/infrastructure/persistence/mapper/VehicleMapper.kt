@@ -5,13 +5,11 @@ import com.vrp.domain.model.Location
 import com.vrp.domain.model.Vehicle
 import com.vrp.infrastructure.persistence.entity.VehicleEntity
 import org.springframework.stereotype.Component
-import java.util.UUID
 
 @Component
 class VehicleMapper {
-
-    fun toDomain(entity: VehicleEntity): Vehicle {
-        return Vehicle(
+    fun toDomain(entity: VehicleEntity): Vehicle =
+        Vehicle(
             id = entity.id,
             organizationId = entity.organizationId,
             name = entity.name,
@@ -22,26 +20,26 @@ class VehicleMapper {
             endLocation = Location(entity.endLat, entity.endLon),
             availableFrom = entity.availableFrom,
             availableUntil = entity.availableUntil,
-            driver = entity.driverId?.let { driverId ->
-                entity.driverName?.let { driverName ->
-                    entity.driverLicense?.let { driverLicense ->
-                        Driver(
-                            id = driverId,
-                            organizationId = entity.organizationId,
-                            name = driverName,
-                            licenseNumber = driverLicense,
-                            phoneNumber = entity.driverPhone,
-                            email = entity.driverEmail
-                        )
+            driver =
+                entity.driverId?.let { driverId ->
+                    entity.driverName?.let { driverName ->
+                        entity.driverLicense?.let { driverLicense ->
+                            Driver(
+                                id = driverId,
+                                organizationId = entity.organizationId,
+                                name = driverName,
+                                licenseNumber = driverLicense,
+                                phoneNumber = entity.driverPhone,
+                                email = entity.driverEmail
+                            )
+                        }
                     }
-                }
-            },
+                },
             costPerKm = entity.costPerKm
         )
-    }
 
-    fun toEntity(domain: Vehicle): VehicleEntity {
-        return VehicleEntity(
+    fun toEntity(domain: Vehicle): VehicleEntity =
+        VehicleEntity(
             organizationId = domain.organizationId,
             name = domain.name,
             licensePlate = domain.licensePlate,
@@ -60,5 +58,4 @@ class VehicleMapper {
             driverEmail = domain.driver?.email,
             costPerKm = domain.costPerKm
         )
-    }
 }

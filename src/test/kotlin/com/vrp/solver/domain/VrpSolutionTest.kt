@@ -10,7 +10,6 @@ import java.time.LocalTime
 import java.util.UUID
 
 class VrpSolutionTest {
-
     @Test
     fun `should create solution with no-arg constructor`() {
         val solution = VrpSolution()
@@ -27,12 +26,13 @@ class VrpSolutionTest {
         val vehicles = mutableListOf(createVehicle())
         val visits = mutableListOf(createVisit())
 
-        val solution = VrpSolution(
-            vehicles = vehicles,
-            visits = visits,
-            score = null,
-            jobId = jobId
-        )
+        val solution =
+            VrpSolution(
+                vehicles = vehicles,
+                visits = visits,
+                score = null,
+                jobId = jobId
+            )
 
         assertThat(solution.vehicles).hasSize(1)
         assertThat(solution.visits).hasSize(1)
@@ -84,8 +84,8 @@ class VrpSolutionTest {
         assertThat(solution.jobId).isEqualTo(originalJobId)
     }
 
-    private fun createVehicle(): SolverVehicle {
-        return SolverVehicle(
+    private fun createVehicle(): SolverVehicle =
+        SolverVehicle(
             id = UUID.randomUUID(),
             name = "Test Vehicle",
             weightCapacity = BigDecimal("1000.0"),
@@ -95,10 +95,9 @@ class VrpSolutionTest {
             availableFrom = LocalTime.of(8, 0),
             availableUntil = LocalTime.of(18, 0)
         )
-    }
 
-    private fun createVisit(): SolverVisit {
-        return SolverVisit(
+    private fun createVisit(): SolverVisit =
+        SolverVisit(
             id = UUID.randomUUID(),
             orderId = UUID.randomUUID(),
             location = Location(40.7589, -73.9851),
@@ -108,5 +107,4 @@ class VrpSolutionTest {
             timeWindowEnd = LocalDateTime.now().plusHours(2),
             serviceDurationMinutes = 30
         )
-    }
 }

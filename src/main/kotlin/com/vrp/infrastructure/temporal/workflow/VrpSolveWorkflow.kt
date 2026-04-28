@@ -10,7 +10,6 @@ import java.util.UUID
  */
 @WorkflowInterface
 interface VrpSolveWorkflow {
-
     @WorkflowMethod
     fun solve(input: VrpJobInput): VrpJobResult
 

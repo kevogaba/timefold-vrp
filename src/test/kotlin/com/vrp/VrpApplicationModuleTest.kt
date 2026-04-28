@@ -6,7 +6,6 @@ import org.springframework.modulith.core.ApplicationModules
 import org.springframework.modulith.docs.Documenter
 
 class VrpApplicationModuleTest {
-
     private val modules = ApplicationModules.of(VrpApplication::class.java)
 
     @Test

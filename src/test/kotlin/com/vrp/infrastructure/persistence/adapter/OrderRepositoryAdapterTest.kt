@@ -13,7 +13,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class OrderRepositoryAdapterTest {
-
     private lateinit var jpaRepository: OrderJpaRepository
     private lateinit var mapper: OrderMapper
     private lateinit var adapter: OrderRepositoryAdapter
@@ -68,10 +67,11 @@ class OrderRepositoryAdapterTest {
     @Test
     fun `should find all orders by organizationId`() {
         val organizationId = UUID.randomUUID()
-        val entities = listOf(
-            createOrderEntity(organizationId = organizationId),
-            createOrderEntity(organizationId = organizationId)
-        )
+        val entities =
+            listOf(
+                createOrderEntity(organizationId = organizationId),
+                createOrderEntity(organizationId = organizationId)
+            )
 
         every { jpaRepository.findAllByOrganizationId(organizationId) } returns entities
 
@@ -108,28 +108,30 @@ class OrderRepositoryAdapterTest {
         verify { jpaRepository.deleteByIdAndOrganizationId(orderId, organizationId) }
     }
 
-    private fun createOrder(): Order {
-        return Order(
+    private fun createOrder(): Order =
+        Order(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
-            customer = Customer(
-                id = UUID.randomUUID(),
-                organizationId = UUID.randomUUID(),
-                name = "Test Customer",
-                phoneNumber = "+1234567890",
-                email = "test@example.com",
-                location = Location(40.7128, -74.0060)
-            ),
-            lineItems = listOf(
-                LineItem(
+            customer =
+                Customer(
                     id = UUID.randomUUID(),
-                    name = "Test Item",
-                    quantity = 1,
-                    weight = BigDecimal("10.0"),
-                    volume = BigDecimal("1.0"),
-                    price = BigDecimal("100.00")
-                )
-            ),
+                    organizationId = UUID.randomUUID(),
+                    name = "Test Customer",
+                    phoneNumber = "+1234567890",
+                    email = "test@example.com",
+                    location = Location(40.7128, -74.0060)
+                ),
+            lineItems =
+                listOf(
+                    LineItem(
+                        id = UUID.randomUUID(),
+                        name = "Test Item",
+                        quantity = 1,
+                        weight = BigDecimal("10.0"),
+                        volume = BigDecimal("1.0"),
+                        price = BigDecimal("100.00")
+                    )
+                ),
             pickupLocation = null,
             deliveryLocation = Location(40.7589, -73.9851),
             timeWindowStart = LocalDateTime.now(),
@@ -139,21 +141,21 @@ class OrderRepositoryAdapterTest {
             notes = null,
             createdAt = LocalDateTime.now()
         )
-    }
 
     private fun createOrderEntity(organizationId: UUID = UUID.randomUUID()): OrderEntity {
-        val entity = OrderEntity(
-            organizationId = organizationId,
-            customerId = UUID.randomUUID(),
-            customerName = "Test Customer",
-            customerLat = 40.7128,
-            customerLon = -74.0060,
-            deliveryLat = 40.7589,
-            deliveryLon = -73.9851,
-            timeWindowStart = LocalDateTime.now(),
-            timeWindowEnd = LocalDateTime.now().plusHours(4),
-            serviceDurationMinutes = 30
-        )
+        val entity =
+            OrderEntity(
+                organizationId = organizationId,
+                customerId = UUID.randomUUID(),
+                customerName = "Test Customer",
+                customerLat = 40.7128,
+                customerLon = -74.0060,
+                deliveryLat = 40.7589,
+                deliveryLon = -73.9851,
+                timeWindowStart = LocalDateTime.now(),
+                timeWindowEnd = LocalDateTime.now().plusHours(4),
+                serviceDurationMinutes = 30
+            )
         // Add at least one line item to satisfy domain validation
         entity.lineItems.add(
             com.vrp.infrastructure.persistence.entity.LineItemEntity(

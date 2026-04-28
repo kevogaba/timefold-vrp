@@ -10,7 +10,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class OrderMapperTest {
-
     private val mapper = OrderMapper()
 
     @Test
@@ -20,34 +19,37 @@ class OrderMapperTest {
         val timeWindowStart = LocalDateTime.now()
         val timeWindowEnd = timeWindowStart.plusHours(2)
 
-        val entity = OrderEntity(
-            organizationId = organizationId,
-            customerId = customerId,
-            customerName = "Test Customer",
-            customerPhone = "+1234567890",
-            customerEmail = "test@example.com",
-            customerLat = 40.7128,
-            customerLon = -74.0060,
-            pickupLat = 40.7000,
-            pickupLon = -74.0000,
-            deliveryLat = 40.7589,
-            deliveryLon = -73.9851,
-            timeWindowStart = timeWindowStart,
-            timeWindowEnd = timeWindowEnd,
-            serviceDurationMinutes = 30,
-            priority = 5,
-            notes = "Test notes"
-        )
+        val entity =
+            OrderEntity(
+                organizationId = organizationId,
+                customerId = customerId,
+                customerName = "Test Customer",
+                customerPhone = "+1234567890",
+                customerEmail = "test@example.com",
+                customerLat = 40.7128,
+                customerLon = -74.0060,
+                pickupLat = 40.7000,
+                pickupLon = -74.0000,
+                deliveryLat = 40.7589,
+                deliveryLon = -73.9851,
+                timeWindowStart = timeWindowStart,
+                timeWindowEnd = timeWindowEnd,
+                serviceDurationMinutes = 30,
+                priority = 5,
+                notes = "Test notes"
+            )
 
         // Add at least one line item
-        entity.lineItems.add(LineItemEntity(
-            order = entity,
-            name = "Test Product",
-            quantity = 1,
-            weight = BigDecimal("5.0"),
-            volume = BigDecimal("1.0"),
-            price = BigDecimal("50.00")
-        ))
+        entity.lineItems.add(
+            LineItemEntity(
+                order = entity,
+                name = "Test Product",
+                quantity = 1,
+                weight = BigDecimal("5.0"),
+                volume = BigDecimal("1.0"),
+                price = BigDecimal("50.00")
+            )
+        )
 
         val domain = mapper.toDomain(entity)
 
@@ -79,36 +81,39 @@ class OrderMapperTest {
         val organizationId = UUID.randomUUID()
         val customerId = UUID.randomUUID()
 
-        val domain = Order(
-            id = orderId,
-            organizationId = organizationId,
-            customer = Customer(
-                id = customerId,
+        val domain =
+            Order(
+                id = orderId,
                 organizationId = organizationId,
-                name = "Test Customer",
-                phoneNumber = "+1234567890",
-                email = "test@example.com",
-                location = Location(40.7128, -74.0060)
-            ),
-            lineItems = listOf(
-                LineItem(
-                    id = UUID.randomUUID(),
-                    name = "Product A",
-                    quantity = 2,
-                    weight = BigDecimal("10.0"),
-                    volume = BigDecimal("2.0"),
-                    price = BigDecimal("99.99")
-                )
-            ),
-            pickupLocation = Location(40.7000, -74.0000),
-            deliveryLocation = Location(40.7589, -73.9851),
-            timeWindowStart = LocalDateTime.now(),
-            timeWindowEnd = LocalDateTime.now().plusHours(2),
-            serviceDurationMinutes = 30,
-            priority = 5,
-            notes = "Test notes",
-            createdAt = LocalDateTime.now()
-        )
+                customer =
+                    Customer(
+                        id = customerId,
+                        organizationId = organizationId,
+                        name = "Test Customer",
+                        phoneNumber = "+1234567890",
+                        email = "test@example.com",
+                        location = Location(40.7128, -74.0060)
+                    ),
+                lineItems =
+                    listOf(
+                        LineItem(
+                            id = UUID.randomUUID(),
+                            name = "Product A",
+                            quantity = 2,
+                            weight = BigDecimal("10.0"),
+                            volume = BigDecimal("2.0"),
+                            price = BigDecimal("99.99")
+                        )
+                    ),
+                pickupLocation = Location(40.7000, -74.0000),
+                deliveryLocation = Location(40.7589, -73.9851),
+                timeWindowStart = LocalDateTime.now(),
+                timeWindowEnd = LocalDateTime.now().plusHours(2),
+                serviceDurationMinutes = 30,
+                priority = 5,
+                notes = "Test notes",
+                createdAt = LocalDateTime.now()
+            )
 
         val entity = mapper.toEntity(domain)
 
@@ -122,28 +127,31 @@ class OrderMapperTest {
 
     @Test
     fun `should handle null pickup location`() {
-        val entity = OrderEntity(
-            organizationId = UUID.randomUUID(),
-            customerId = UUID.randomUUID(),
-            customerName = "Test",
-            customerLat = 40.7128,
-            customerLon = -74.0060,
-            deliveryLat = 40.7589,
-            deliveryLon = -73.9851,
-            timeWindowStart = LocalDateTime.now(),
-            timeWindowEnd = LocalDateTime.now().plusHours(2),
-            serviceDurationMinutes = 30
-        )
+        val entity =
+            OrderEntity(
+                organizationId = UUID.randomUUID(),
+                customerId = UUID.randomUUID(),
+                customerName = "Test",
+                customerLat = 40.7128,
+                customerLon = -74.0060,
+                deliveryLat = 40.7589,
+                deliveryLon = -73.9851,
+                timeWindowStart = LocalDateTime.now(),
+                timeWindowEnd = LocalDateTime.now().plusHours(2),
+                serviceDurationMinutes = 30
+            )
 
         // Add at least one line item
-        entity.lineItems.add(LineItemEntity(
-            order = entity,
-            name = "Test Product",
-            quantity = 1,
-            weight = BigDecimal("5.0"),
-            volume = BigDecimal("1.0"),
-            price = BigDecimal("50.00")
-        ))
+        entity.lineItems.add(
+            LineItemEntity(
+                order = entity,
+                name = "Test Product",
+                quantity = 1,
+                weight = BigDecimal("5.0"),
+                volume = BigDecimal("1.0"),
+                price = BigDecimal("50.00")
+            )
+        )
 
         val domain = mapper.toDomain(entity)
 

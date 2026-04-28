@@ -1,10 +1,10 @@
 package com.vrp.solver.mapper
 
 import com.vrp.domain.model.*
+import com.vrp.solver.distance.DistanceCalculator
 import com.vrp.solver.domain.SolverVehicle
 import com.vrp.solver.domain.SolverVisit
 import com.vrp.solver.domain.VrpSolution
-import com.vrp.solver.distance.DistanceCalculator
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -31,7 +31,6 @@ import java.util.UUID
 class SolverDomainMapper(
     private val distanceCalculator: DistanceCalculator
 ) {
-
     /**
      * Converts domain orders and vehicles into a Timefold planning solution ready for optimization.
      *
@@ -52,35 +51,39 @@ class SolverDomainMapper(
         orders: List<Order>,
         vehicles: List<Vehicle>
     ): VrpSolution {
-        val visits = orders.map { order ->
-            SolverVisit(
-                id = UUID.randomUUID(),
-                orderId = order.id,
-                location = order.deliveryLocation,
-                demandWeight = order.totalWeight,
-                demandVolume = order.totalVolume,
-                timeWindowStart = order.timeWindowStart,
-                timeWindowEnd = order.timeWindowEnd,
-                serviceDurationMinutes = order.serviceDurationMinutes,
-                isPickup = false,
-                isDelivery = true
-            )
-        }.toMutableList()
+        val visits =
+            orders
+                .map { order ->
+                    SolverVisit(
+                        id = UUID.randomUUID(),
+                        orderId = order.id,
+                        location = order.deliveryLocation,
+                        demandWeight = order.totalWeight,
+                        demandVolume = order.totalVolume,
+                        timeWindowStart = order.timeWindowStart,
+                        timeWindowEnd = order.timeWindowEnd,
+                        serviceDurationMinutes = order.serviceDurationMinutes,
+                        isPickup = false,
+                        isDelivery = true
+                    )
+                }.toMutableList()
 
-        val solverVehicles = vehicles.map { vehicle ->
-            SolverVehicle(
-                id = vehicle.id,
-                name = vehicle.name,
-                weightCapacity = vehicle.weightCapacity,
-                volumeCapacity = vehicle.volumeCapacity,
-                startLocation = vehicle.startLocation,
-                endLocation = vehicle.endLocation,
-                availableFrom = vehicle.availableFrom,
-                availableUntil = vehicle.availableUntil,
-                costPerKm = vehicle.costPerKm,
-                visits = mutableListOf()
-            )
-        }.toMutableList()
+        val solverVehicles =
+            vehicles
+                .map { vehicle ->
+                    SolverVehicle(
+                        id = vehicle.id,
+                        name = vehicle.name,
+                        weightCapacity = vehicle.weightCapacity,
+                        volumeCapacity = vehicle.volumeCapacity,
+                        startLocation = vehicle.startLocation,
+                        endLocation = vehicle.endLocation,
+                        availableFrom = vehicle.availableFrom,
+                        availableUntil = vehicle.availableUntil,
+                        costPerKm = vehicle.costPerKm,
+                        visits = mutableListOf()
+                    )
+                }.toMutableList()
 
         return VrpSolution(
             vehicles = solverVehicles,
@@ -109,20 +112,21 @@ class SolverDomainMapper(
         solution: VrpSolution,
         organizationId: UUID,
         jobId: UUID
-    ): List<Trip> {
-        return solution.vehicles
+    ): List<Trip> =
+        solution.vehicles
             .filter { it.visits.isNotEmpty() }
             .map { vehicle ->
-                val visits = vehicle.visits.mapIndexed { index, solverVisit ->
-                    Visit(
-                        id = solverVisit.id,
-                        orderId = solverVisit.orderId,
-                        location = solverVisit.location,
-                        arrivalTime = calculateArrivalTime(vehicle, index),
-                        departureTime = calculateDepartureTime(vehicle, index),
-                        sequenceNumber = index
-                    )
-                }
+                val visits =
+                    vehicle.visits.mapIndexed { index, solverVisit ->
+                        Visit(
+                            id = solverVisit.id,
+                            orderId = solverVisit.orderId,
+                            location = solverVisit.location,
+                            arrivalTime = calculateArrivalTime(vehicle, index),
+                            departureTime = calculateDepartureTime(vehicle, index),
+                            sequenceNumber = index
+                        )
+                    }
 
                 val totalDistance = calculateTotalDistance(vehicle)
                 val totalDuration = calculateTotalDuration(vehicle)
@@ -138,9 +142,11 @@ class SolverDomainMapper(
                     createdAt = LocalDateTime.now()
                 )
             }
-    }
 
-    private fun calculateArrivalTime(vehicle: SolverVehicle, visitIndex: Int): LocalDateTime {
+    private fun calculateArrivalTime(
+        vehicle: SolverVehicle,
+        visitIndex: Int
+    ): LocalDateTime {
         var currentTime = LocalDateTime.now().with(vehicle.availableFrom)
         var currentLocation = vehicle.startLocation
 
@@ -159,7 +165,10 @@ class SolverDomainMapper(
         return currentTime
     }
 
-    private fun calculateDepartureTime(vehicle: SolverVehicle, visitIndex: Int): LocalDateTime {
+    private fun calculateDepartureTime(
+        vehicle: SolverVehicle,
+        visitIndex: Int
+    ): LocalDateTime {
         val arrivalTime = calculateArrivalTime(vehicle, visitIndex)
         val visit = vehicle.visits[visitIndex]
         return arrivalTime.plusMinutes(visit.serviceDurationMinutes.toLong())

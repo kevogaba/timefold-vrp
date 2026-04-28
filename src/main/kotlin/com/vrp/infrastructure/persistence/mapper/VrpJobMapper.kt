@@ -1,15 +1,13 @@
 package com.vrp.infrastructure.persistence.mapper
 
-import com.vrp.domain.model.JobStatus
 import com.vrp.domain.model.VrpJob
 import com.vrp.infrastructure.persistence.entity.VrpJobEntity
 import org.springframework.stereotype.Component
 
 @Component
 class VrpJobMapper {
-
-    fun toDomain(entity: VrpJobEntity): VrpJob {
-        return VrpJob(
+    fun toDomain(entity: VrpJobEntity): VrpJob =
+        VrpJob(
             id = entity.id,
             organizationId = entity.organizationId,
             status = entity.status,
@@ -22,10 +20,9 @@ class VrpJobMapper {
             startedAt = entity.startedAt,
             completedAt = entity.completedAt
         )
-    }
 
-    fun toEntity(domain: VrpJob): VrpJobEntity {
-        return VrpJobEntity(
+    fun toEntity(domain: VrpJob): VrpJobEntity =
+        VrpJobEntity(
             organizationId = domain.organizationId,
             status = domain.status,
             hardScore = domain.hardScore,
@@ -35,5 +32,4 @@ class VrpJobMapper {
             startedAt = domain.startedAt,
             completedAt = domain.completedAt
         )
-    }
 }

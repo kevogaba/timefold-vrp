@@ -12,7 +12,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class TripRepositoryAdapterTest {
-
     private lateinit var jpaRepository: TripJpaRepository
     private lateinit var mapper: TripMapper
     private lateinit var adapter: TripRepositoryAdapter
@@ -68,10 +67,11 @@ class TripRepositoryAdapterTest {
     fun `should find all trips by jobId and organizationId`() {
         val organizationId = UUID.randomUUID()
         val jobId = UUID.randomUUID()
-        val entities = listOf(
-            createTripEntity(organizationId = organizationId, jobId = jobId),
-            createTripEntity(organizationId = organizationId, jobId = jobId)
-        )
+        val entities =
+            listOf(
+                createTripEntity(organizationId = organizationId, jobId = jobId),
+                createTripEntity(organizationId = organizationId, jobId = jobId)
+            )
 
         every { jpaRepository.findAllByJobIdAndOrganizationId(jobId, organizationId) } returns entities
 
@@ -85,10 +85,11 @@ class TripRepositoryAdapterTest {
     @Test
     fun `should find all trips by organizationId`() {
         val organizationId = UUID.randomUUID()
-        val entities = listOf(
-            createTripEntity(organizationId = organizationId),
-            createTripEntity(organizationId = organizationId)
-        )
+        val entities =
+            listOf(
+                createTripEntity(organizationId = organizationId),
+                createTripEntity(organizationId = organizationId)
+            )
 
         every { jpaRepository.findAllByOrganizationId(organizationId) } returns entities
 
@@ -98,38 +99,37 @@ class TripRepositoryAdapterTest {
         verify { jpaRepository.findAllByOrganizationId(organizationId) }
     }
 
-    private fun createTrip(): Trip {
-        return Trip(
+    private fun createTrip(): Trip =
+        Trip(
             id = UUID.randomUUID(),
             organizationId = UUID.randomUUID(),
             jobId = UUID.randomUUID(),
             vehicleId = UUID.randomUUID(),
-            visits = listOf(
-                Visit(
-                    id = UUID.randomUUID(),
-                    orderId = UUID.randomUUID(),
-                    location = Location(40.7589, -73.9851),
-                    arrivalTime = LocalDateTime.now(),
-                    departureTime = LocalDateTime.now().plusMinutes(30),
-                    sequenceNumber = 0
-                )
-            ),
+            visits =
+                listOf(
+                    Visit(
+                        id = UUID.randomUUID(),
+                        orderId = UUID.randomUUID(),
+                        location = Location(40.7589, -73.9851),
+                        arrivalTime = LocalDateTime.now(),
+                        departureTime = LocalDateTime.now().plusMinutes(30),
+                        sequenceNumber = 0
+                    )
+                ),
             totalDistanceMeters = 10000L,
             totalDurationMinutes = 60,
             createdAt = LocalDateTime.now()
         )
-    }
 
     private fun createTripEntity(
         organizationId: UUID = UUID.randomUUID(),
         jobId: UUID = UUID.randomUUID()
-    ): TripEntity {
-        return TripEntity(
+    ): TripEntity =
+        TripEntity(
             organizationId = organizationId,
             jobId = jobId,
             vehicleId = UUID.randomUUID(),
             totalDistanceMeters = 10000L,
             totalDurationMinutes = 60
         )
-    }
 }

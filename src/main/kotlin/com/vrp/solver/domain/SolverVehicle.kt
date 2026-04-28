@@ -1,7 +1,7 @@
 package com.vrp.solver.domain
 
-import ai.timefold.solver.core.api.domain.entity.PlanningEntity
 import ai.timefold.solver.core.api.domain.common.PlanningId
+import ai.timefold.solver.core.api.domain.entity.PlanningEntity
 import ai.timefold.solver.core.api.domain.variable.PlanningListVariable
 import com.vrp.domain.model.Location
 import java.math.BigDecimal
@@ -23,7 +23,6 @@ data class SolverVehicle(
     val availableFrom: LocalTime,
     val availableUntil: LocalTime,
     val costPerKm: BigDecimal = BigDecimal.ZERO,
-
     @PlanningListVariable
     val visits: MutableList<SolverVisit> = mutableListOf()
 ) {

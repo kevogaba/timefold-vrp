@@ -14,7 +14,6 @@ class TripRepositoryAdapter(
     private val jpaRepository: TripJpaRepository,
     private val mapper: TripMapper
 ) : TripRepository {
-
     override fun save(trip: Trip): Trip {
         val entity = mapper.toEntity(trip)
         val saved = jpaRepository.save(entity)
@@ -27,18 +26,24 @@ class TripRepositoryAdapter(
         return saved.map { mapper.toDomain(it) }
     }
 
-    override fun findById(id: UUID, organizationId: UUID): Trip? {
-        return jpaRepository.findByIdAndOrganizationId(id, organizationId)
+    override fun findById(
+        id: UUID,
+        organizationId: UUID
+    ): Trip? =
+        jpaRepository
+            .findByIdAndOrganizationId(id, organizationId)
             ?.let { mapper.toDomain(it) }
-    }
 
-    override fun findAllByJobId(jobId: UUID, organizationId: UUID): List<Trip> {
-        return jpaRepository.findAllByJobIdAndOrganizationId(jobId, organizationId)
+    override fun findAllByJobId(
+        jobId: UUID,
+        organizationId: UUID
+    ): List<Trip> =
+        jpaRepository
+            .findAllByJobIdAndOrganizationId(jobId, organizationId)
             .map { mapper.toDomain(it) }
-    }
 
-    override fun findAllByOrganizationId(organizationId: UUID): List<Trip> {
-        return jpaRepository.findAllByOrganizationId(organizationId)
+    override fun findAllByOrganizationId(organizationId: UUID): List<Trip> =
+        jpaRepository
+            .findAllByOrganizationId(organizationId)
             .map { mapper.toDomain(it) }
-    }
 }

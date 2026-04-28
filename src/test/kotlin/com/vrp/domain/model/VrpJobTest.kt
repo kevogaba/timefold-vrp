@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class VrpJobTest {
-
     @Test
     fun `should create pending job`() {
         val id = UUID.randomUUID()
@@ -15,13 +14,14 @@ class VrpJobTest {
         val orderIds = listOf(UUID.randomUUID(), UUID.randomUUID())
         val vehicleIds = listOf(UUID.randomUUID())
 
-        val job = VrpJob(
-            id = id,
-            organizationId = organizationId,
-            status = JobStatus.PENDING,
-            orderIds = orderIds,
-            vehicleIds = vehicleIds
-        )
+        val job =
+            VrpJob(
+                id = id,
+                organizationId = organizationId,
+                status = JobStatus.PENDING,
+                orderIds = orderIds,
+                vehicleIds = vehicleIds
+            )
 
         assertThat(job.id).isEqualTo(id)
         assertThat(job.organizationId).isEqualTo(organizationId)
@@ -37,17 +37,18 @@ class VrpJobTest {
 
     @Test
     fun `should create completed job with scores`() {
-        val job = VrpJob(
-            id = UUID.randomUUID(),
-            organizationId = UUID.randomUUID(),
-            status = JobStatus.COMPLETED,
-            orderIds = listOf(UUID.randomUUID()),
-            vehicleIds = listOf(UUID.randomUUID()),
-            hardScore = 0,
-            softScore = -1000,
-            startedAt = LocalDateTime.now().minusMinutes(10),
-            completedAt = LocalDateTime.now()
-        )
+        val job =
+            VrpJob(
+                id = UUID.randomUUID(),
+                organizationId = UUID.randomUUID(),
+                status = JobStatus.COMPLETED,
+                orderIds = listOf(UUID.randomUUID()),
+                vehicleIds = listOf(UUID.randomUUID()),
+                hardScore = 0,
+                softScore = -1000,
+                startedAt = LocalDateTime.now().minusMinutes(10),
+                completedAt = LocalDateTime.now()
+            )
 
         assertThat(job.status).isEqualTo(JobStatus.COMPLETED)
         assertThat(job.hardScore).isEqualTo(0)
@@ -60,16 +61,17 @@ class VrpJobTest {
     fun `should create failed job with error message`() {
         val errorMessage = "Solver timeout"
 
-        val job = VrpJob(
-            id = UUID.randomUUID(),
-            organizationId = UUID.randomUUID(),
-            status = JobStatus.FAILED,
-            orderIds = listOf(UUID.randomUUID()),
-            vehicleIds = listOf(UUID.randomUUID()),
-            errorMessage = errorMessage,
-            startedAt = LocalDateTime.now().minusMinutes(5),
-            completedAt = LocalDateTime.now()
-        )
+        val job =
+            VrpJob(
+                id = UUID.randomUUID(),
+                organizationId = UUID.randomUUID(),
+                status = JobStatus.FAILED,
+                orderIds = listOf(UUID.randomUUID()),
+                vehicleIds = listOf(UUID.randomUUID()),
+                errorMessage = errorMessage,
+                startedAt = LocalDateTime.now().minusMinutes(5),
+                completedAt = LocalDateTime.now()
+            )
 
         assertThat(job.status).isEqualTo(JobStatus.FAILED)
         assertThat(job.errorMessage).isEqualTo(errorMessage)

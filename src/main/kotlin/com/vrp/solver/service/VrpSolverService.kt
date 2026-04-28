@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap
 class VrpSolverService(
     private val solverManager: SolverManager<VrpSolution>
 ) {
-
     private val solutionCache = ConcurrentHashMap<UUID, VrpSolution>()
 
     /**
@@ -40,9 +39,7 @@ class VrpSolverService(
     /**
      * Get the status of a solving job.
      */
-    fun getSolverStatus(problemId: UUID): SolverStatus {
-        return solverManager.getSolverStatus(problemId)
-    }
+    fun getSolverStatus(problemId: UUID): SolverStatus = solverManager.getSolverStatus(problemId)
 
     /**
      * Terminate solving for a problem.
@@ -54,7 +51,5 @@ class VrpSolverService(
     /**
      * Get cached solution if available.
      */
-    fun getCachedSolution(problemId: UUID): VrpSolution? {
-        return solutionCache[problemId]
-    }
+    fun getCachedSolution(problemId: UUID): VrpSolution? = solutionCache[problemId]
 }

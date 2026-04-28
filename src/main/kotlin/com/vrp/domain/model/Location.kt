@@ -1,7 +1,5 @@
 package com.vrp.domain.model
 
-import java.util.UUID
-
 /**
  * Geographic location with latitude and longitude coordinates.
  */
