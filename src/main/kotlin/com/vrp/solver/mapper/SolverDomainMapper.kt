@@ -9,14 +9,43 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 /**
- * Mapper between domain and solver models.
+ * Mapper for converting between domain models and Timefold Solver planning models.
+ *
+ * This mapper handles the bidirectional transformation:
+ * - **Domain → Solver**: Converts business domain models (Order, Vehicle) into Timefold planning models
+ *   (VrpSolution, SolverVehicle, SolverVisit) that the constraint solver can work with.
+ * - **Solver → Domain**: Converts optimized solver output back into domain models (Trip, Visit)
+ *   that represent the final routing solution.
+ *
+ * The mapper also calculates:
+ * - Travel times and arrival times for each visit
+ * - Total distance and duration for each trip
+ * - Demand aggregation from order line items
+ *
+ * @property distanceCalculator Calculator for computing distances and travel times between locations
+ *
+ * @see VrpSolution The Timefold planning solution containing vehicles and visits
+ * @see com.vrp.domain.model.Order Domain model for customer orders
+ * @see com.vrp.domain.model.Trip Domain model for optimized vehicle routes
  */
 class SolverDomainMapper(
     private val distanceCalculator: DistanceCalculator
 ) {
 
     /**
-     * Convert domain models to solver solution.
+     * Converts domain orders and vehicles into a Timefold planning solution ready for optimization.
+     *
+     * This method:
+     * 1. Creates SolverVehicle instances from domain vehicles
+     * 2. Creates SolverVisit instances from domain orders (aggregating line item demands)
+     * 3. Assembles them into a VrpSolution that Timefold can solve
+     *
+     * The initial solution has all visits unassigned (not yet assigned to vehicles).
+     *
+     * @param jobId The unique identifier for this optimization job
+     * @param orders List of customer orders to be routed
+     * @param vehicles List of available vehicles for the routes
+     * @return VrpSolution ready for Timefold Solver with unassigned visits
      */
     fun toSolverSolution(
         jobId: UUID,
@@ -62,7 +91,19 @@ class SolverDomainMapper(
     }
 
     /**
-     * Convert solver solution to domain trips.
+     * Converts an optimized Timefold solution back into domain Trip models.
+     *
+     * This method:
+     * 1. Filters out vehicles with no assigned visits
+     * 2. For each vehicle with visits, creates a Trip with calculated arrival/departure times
+     * 3. Calculates total distance and duration for each trip
+     *
+     * Only vehicles that have been assigned at least one visit will produce a Trip.
+     *
+     * @param solution The optimized VrpSolution from Timefold Solver
+     * @param organizationId The organization ID for multi-tenancy
+     * @param jobId The job ID this solution belongs to
+     * @return List of domain Trip models representing optimized routes
      */
     fun toTrips(
         solution: VrpSolution,
