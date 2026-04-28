@@ -1,13 +1,3 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
-    }
-    dependencies {
-        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:2.0.0-RC1")
-    }
-}
-
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
@@ -18,10 +8,9 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.graalvm.native)
     alias(libs.plugins.ktlint)
+    id("io.gitlab.arturbosch.detekt") version "2.0.0-alpha.3"
     kotlin("plugin.allopen") version "2.3.21"
 }
-
-apply(plugin = "io.gitlab.arturbosch.detekt")
 
 group = "com.vrp"
 version = "1.0.0-SNAPSHOT"
@@ -111,7 +100,7 @@ dependencies {
     implementation(libs.logback.encoder)
 
     // Detekt plugins
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:2.0.0-RC1")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:2.0.0-alpha.3")
 
     // Testing
     testImplementation(libs.spring.boot.starter.test)
