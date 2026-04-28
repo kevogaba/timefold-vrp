@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
+    }
+    dependencies {
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:2.0.0-RC1")
+    }
+}
+
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
@@ -7,11 +17,11 @@ plugins {
     alias(libs.plugins.spring.cloud.contract)
     alias(libs.plugins.kover)
     alias(libs.plugins.graalvm.native)
-    // Detekt temporarily disabled due to Kotlin version incompatibility
-    // alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
     kotlin("plugin.allopen") version "2.3.21"
 }
+
+apply(plugin = "io.gitlab.arturbosch.detekt")
 
 group = "com.vrp"
 version = "1.0.0-SNAPSHOT"
@@ -100,8 +110,8 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.logback.encoder)
 
-    // Detekt plugins (disabled until Kotlin 2.3.21 compatible version is available)
-    // detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8")
+    // Detekt plugins
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:2.0.0-RC1")
 
     // Testing
     testImplementation(libs.spring.boot.starter.test)
@@ -199,17 +209,12 @@ graalvmNative {
     }
 }
 
-// Detekt configuration (temporarily disabled due to Kotlin 2.3.21 incompatibility)
-// Detekt 1.23.8 requires Kotlin 2.0.x. Once a compatible version is released, uncomment below:
-
-/*
+// Detekt configuration
 detekt {
     buildUponDefaultConfig = true
     allRules = false
     config.setFrom(files("$rootDir/detekt.yml"))
-    // Disable type resolution to avoid Kotlin version mismatch
-    // https://detekt.dev/docs/gettingstarted/type-resolution
-    ignoreFailures = false
+    baseline = file("$rootDir/detekt-baseline.xml")
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
@@ -221,7 +226,6 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
         sarif.required.set(true)
     }
 }
-*/
 
 // Ktlint configuration
 ktlint {
@@ -239,11 +243,8 @@ ktlint {
 }
 
 // Make check task depend on linting
-// Note: Detekt is currently disabled due to Kotlin version incompatibility
-// (Detekt 1.23.8 requires Kotlin 2.0.x, but we're using 2.3.21)
-// Once Detekt releases a version compatible with Kotlin 2.3.21, uncomment the line below
 tasks.named("check") {
-    // dependsOn("detekt")
+    dependsOn("detekt")
     dependsOn("ktlintCheck")
 }
 
