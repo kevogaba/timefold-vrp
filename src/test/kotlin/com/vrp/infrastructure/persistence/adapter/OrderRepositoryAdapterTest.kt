@@ -8,7 +8,6 @@ import com.vrp.infrastructure.persistence.entity.OrderEntity
 import com.vrp.infrastructure.persistence.mapper.OrderMapper
 import com.vrp.infrastructure.persistence.repository.OrderJpaRepository
 import io.mockk.Runs
-import io.mockk.any
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk

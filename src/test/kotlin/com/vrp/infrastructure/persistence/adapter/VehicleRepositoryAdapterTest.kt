@@ -6,7 +6,6 @@ import com.vrp.infrastructure.persistence.entity.VehicleEntity
 import com.vrp.infrastructure.persistence.mapper.VehicleMapper
 import com.vrp.infrastructure.persistence.repository.VehicleJpaRepository
 import io.mockk.Runs
-import io.mockk.any
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk

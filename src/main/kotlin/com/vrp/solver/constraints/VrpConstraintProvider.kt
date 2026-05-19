@@ -16,6 +16,7 @@ import java.time.temporal.ChronoUnit
  */
 class VrpConstraintProvider : ConstraintProvider {
     private val distanceCalculator = EuclideanDistanceCalculator()
+
     private companion object {
         private const val TARGET_UTILIZATION_PERCENT = 80
     }

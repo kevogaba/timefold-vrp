@@ -6,8 +6,9 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
-import io.temporal.client.WorkflowNotFoundException
+import io.temporal.api.common.v1.WorkflowExecution
 import io.temporal.client.WorkflowClient
+import io.temporal.client.WorkflowNotFoundException
 import io.temporal.client.WorkflowStub
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -44,8 +45,14 @@ class VrpOrchestrationAdapterTest {
     fun `should return null when query workflow status fails`() {
         val workflowId = "vrp-solve-${UUID.randomUUID()}"
 
+        val execution =
+            WorkflowExecution
+                .newBuilder()
+                .setWorkflowId(workflowId)
+                .setRunId("runId")
+                .build()
         every { workflowClient.newWorkflowStub(VrpSolveWorkflow::class.java, workflowId) } throws
-            WorkflowNotFoundException(workflowId, "runId")
+            WorkflowNotFoundException(execution, "newWorkflowStub", null)
 
         val status = adapter.queryWorkflowStatus(workflowId)
 

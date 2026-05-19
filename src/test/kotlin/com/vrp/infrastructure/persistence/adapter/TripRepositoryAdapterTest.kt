@@ -6,7 +6,6 @@ import com.vrp.domain.model.Visit
 import com.vrp.infrastructure.persistence.entity.TripEntity
 import com.vrp.infrastructure.persistence.mapper.TripMapper
 import com.vrp.infrastructure.persistence.repository.TripJpaRepository
-import io.mockk.any
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
