@@ -2,14 +2,22 @@ package com.vrp.infrastructure.temporal.activity.impl
 
 import ai.timefold.solver.core.api.score.HardSoftScore
 import ai.timefold.solver.core.api.solver.SolverStatus
-import com.vrp.domain.model.*
+import com.vrp.domain.model.Customer
+import com.vrp.domain.model.LineItem
+import com.vrp.domain.model.Location
+import com.vrp.domain.model.Order
+import com.vrp.domain.model.Trip
+import com.vrp.domain.model.Vehicle
+import com.vrp.domain.model.Visit
 import com.vrp.domain.port.OrderRepository
 import com.vrp.domain.port.TripRepository
 import com.vrp.domain.port.VehicleRepository
 import com.vrp.infrastructure.temporal.activity.SolverResult
 import com.vrp.solver.domain.VrpSolution
 import com.vrp.solver.service.VrpSolverService
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach

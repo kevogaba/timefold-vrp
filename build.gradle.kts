@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.graalvm.native)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
-    kotlin("plugin.allopen") version "2.3.21"
+    kotlin("plugin.allopen") version libs.versions.kotlin.get()
 }
 
 group = "com.vrp"
@@ -24,6 +24,7 @@ java {
 kotlin {
     compilerOptions {
         freeCompilerArgs.add("-Xjsr305=strict")
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
     }
 }
 
@@ -98,9 +99,6 @@ dependencies {
     // Logging
     implementation(libs.logback.classic)
     implementation(libs.logback.encoder)
-
-    // Detekt plugins
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${libs.versions.detekt.get()}")
 
     // Testing
     testImplementation(libs.spring.boot.starter.test)
@@ -202,18 +200,21 @@ graalvmNative {
 detekt {
     buildUponDefaultConfig = true
     allRules = false
-    config.setFrom(files("$rootDir/detekt.yml"))
     baseline = file("$rootDir/detekt-baseline.xml")
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+tasks.withType<dev.detekt.gradle.Detekt>().configureEach {
     jvmTarget = "25"
     reports {
         html.required.set(true)
-        xml.required.set(true)
-        txt.required.set(false)
+        checkstyle.required.set(true)
+        markdown.required.set(true)
         sarif.required.set(true)
     }
+}
+
+tasks.withType<dev.detekt.gradle.DetektCreateBaselineTask>().configureEach {
+    jvmTarget = "25"
 }
 
 // Ktlint configuration

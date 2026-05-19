@@ -1,0 +1,194 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ClassOrdering:EuclideanDistanceCalculator.kt$EuclideanDistanceCalculator$override fun distanceBetween( a: Location, b: Location ): Long</ID>
+    <ID>DataClassShouldBeImmutable:VrpJobEntity.kt$VrpJobEntity$@Column(columnDefinition = "TEXT") var errorMessage: String? = null</ID>
+    <ID>DataClassShouldBeImmutable:VrpJobEntity.kt$VrpJobEntity$@Enumerated(EnumType.STRING) @Column(nullable = false) var status: JobStatus</ID>
+    <ID>DataClassShouldBeImmutable:VrpJobEntity.kt$VrpJobEntity$var completedAt: LocalDateTime? = null</ID>
+    <ID>DataClassShouldBeImmutable:VrpJobEntity.kt$VrpJobEntity$var hardScore: Int? = null</ID>
+    <ID>DataClassShouldBeImmutable:VrpJobEntity.kt$VrpJobEntity$var softScore: Int? = null</ID>
+    <ID>DataClassShouldBeImmutable:VrpJobEntity.kt$VrpJobEntity$var startedAt: LocalDateTime? = null</ID>
+    <ID>DataClassShouldBeImmutable:VrpSolution.kt$VrpSolution$@PlanningScore var score: HardSoftScore? = null</ID>
+    <ID>ExpressionBodySyntax:VrpSolverService.kt$VrpSolverService$return solutionCache[problemId]</ID>
+    <ID>FunctionMaxLength:EuclideanDistanceCalculatorTest.kt$EuclideanDistanceCalculatorTest$@Test fun `should calculate distance between London and Paris approximately`()</ID>
+    <ID>FunctionMaxLength:EuclideanDistanceCalculatorTest.kt$EuclideanDistanceCalculatorTest$@Test fun `should calculate distance between New York and Los Angeles approximately`()</ID>
+    <ID>FunctionMaxLength:RedisConfigTest.kt$RedisConfigTest$@Test fun `redis template should use same serializer for value and hash value`()</ID>
+    <ID>FunctionMaxLength:SolverDomainMapperTest.kt$SolverDomainMapperTest$@Test fun `should calculate total distance including return to end location`()</ID>
+    <ID>FunctionMaxLength:SolverDomainMapperTest.kt$SolverDomainMapperTest$@Test fun `should calculate total duration including travel and service time`()</ID>
+    <ID>FunctionMaxLength:SolverDomainMapperTest.kt$SolverDomainMapperTest$@Test fun `should filter out vehicles with no visits when converting to trips`()</ID>
+    <ID>FunctionMaxLength:VrpConstraintProviderTest.kt$VrpConstraintProviderTest$@Test fun `should calculate total distance including return to end location`()</ID>
+    <ID>MagicNumber:ActivityImpls.kt$RunSolverActivityImpl$1000</ID>
+    <ID>MagicNumber:Location.kt$Location$180.0</ID>
+    <ID>MagicNumber:Location.kt$Location$90.0</ID>
+    <ID>MagicNumber:RedisConfig.kt$RedisConfig$10</ID>
+    <ID>MagicNumber:SolverDomainMapper.kt$SolverDomainMapper$1000</ID>
+    <ID>MagicNumber:SolverDomainMapper.kt$SolverDomainMapper$60</ID>
+    <ID>MagicNumber:VrpConstraintProvider.kt$VrpConstraintProvider$100</ID>
+    <ID>MagicNumber:VrpConstraintProvider.kt$VrpConstraintProvider$1000</ID>
+    <ID>MagicNumber:VrpConstraintProvider.kt$VrpConstraintProvider$60</ID>
+    <ID>MagicNumber:VrpConstraintProvider.kt$VrpConstraintProvider$80</ID>
+    <ID>MagicNumber:VrpOrchestrationAdapter.kt$VrpOrchestrationAdapter$15</ID>
+    <ID>MagicNumber:VrpSolveWorkflowImpl.kt$VrpSolveWorkflowImpl$10</ID>
+    <ID>MagicNumber:VrpSolveWorkflowImpl.kt$VrpSolveWorkflowImpl$3</ID>
+    <ID>MagicNumber:VrpSolveWorkflowImpl.kt$VrpSolveWorkflowImpl$30</ID>
+    <ID>MagicNumber:VrpSolveWorkflowImpl.kt$VrpSolveWorkflowImpl$5</ID>
+    <ID>SpreadOperator:VrpApplication.kt$(*args)</ID>
+    <ID>SwallowedException:VrpOrchestrationAdapter.kt$VrpOrchestrationAdapter$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:VrpOrchestrationAdapter.kt$VrpOrchestrationAdapter$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:VrpSolveWorkflowImpl.kt$VrpSolveWorkflowImpl$e: Exception</ID>
+    <ID>UndocumentedPublicClass:Activities.kt$FetchOrdersActivity</ID>
+    <ID>UndocumentedPublicClass:Activities.kt$FetchVehiclesActivity</ID>
+    <ID>UndocumentedPublicClass:Activities.kt$PersistSolutionActivity</ID>
+    <ID>UndocumentedPublicClass:Activities.kt$RunSolverActivity</ID>
+    <ID>UndocumentedPublicClass:Activities.kt$SolverResult</ID>
+    <ID>UndocumentedPublicClass:ActivityImpls.kt$FetchOrdersActivityImpl : FetchOrdersActivity</ID>
+    <ID>UndocumentedPublicClass:ActivityImpls.kt$FetchVehiclesActivityImpl : FetchVehiclesActivity</ID>
+    <ID>UndocumentedPublicClass:ActivityImpls.kt$PersistSolutionActivityImpl : PersistSolutionActivity</ID>
+    <ID>UndocumentedPublicClass:ActivityImpls.kt$RunSolverActivityImpl : RunSolverActivity</ID>
+    <ID>UndocumentedPublicClass:ApiDtoMapper.kt$ApiDtoMapper</ID>
+    <ID>UndocumentedPublicClass:AuditLogEntity.kt$AuditLogEntity</ID>
+    <ID>UndocumentedPublicClass:Dtos.kt$JobResponse</ID>
+    <ID>UndocumentedPublicClass:Dtos.kt$LocationDto</ID>
+    <ID>UndocumentedPublicClass:Dtos.kt$OrderDto</ID>
+    <ID>UndocumentedPublicClass:Dtos.kt$SubmitJobRequest</ID>
+    <ID>UndocumentedPublicClass:Dtos.kt$TripResponse</ID>
+    <ID>UndocumentedPublicClass:Dtos.kt$VisitResponse</ID>
+    <ID>UndocumentedPublicClass:EuclideanDistanceCalculator.kt$EuclideanDistanceCalculator$Companion</ID>
+    <ID>UndocumentedPublicClass:GetJobStatusUseCase.kt$GetJobStatusUseCase</ID>
+    <ID>UndocumentedPublicClass:GetTripUseCase.kt$GetTripUseCase</ID>
+    <ID>UndocumentedPublicClass:JobController.kt$JobController</ID>
+    <ID>UndocumentedPublicClass:JwtOrgIdExtractor.kt$JwtOrgIdExtractor</ID>
+    <ID>UndocumentedPublicClass:LineItemEntity.kt$LineItemEntity</ID>
+    <ID>UndocumentedPublicClass:OrderEntity.kt$OrderEntity</ID>
+    <ID>UndocumentedPublicClass:OrderJpaRepository.kt$OrderJpaRepository : JpaRepository</ID>
+    <ID>UndocumentedPublicClass:OrderMapper.kt$OrderMapper</ID>
+    <ID>UndocumentedPublicClass:OrderRepositoryAdapter.kt$OrderRepositoryAdapter : OrderRepository</ID>
+    <ID>UndocumentedPublicClass:RedisConfig.kt$RedisConfig</ID>
+    <ID>UndocumentedPublicClass:SecurityConfig.kt$SecurityConfig</ID>
+    <ID>UndocumentedPublicClass:TemporalConfig.kt$TemporalConfig</ID>
+    <ID>UndocumentedPublicClass:TripController.kt$TripController</ID>
+    <ID>UndocumentedPublicClass:TripEntity.kt$TripEntity</ID>
+    <ID>UndocumentedPublicClass:TripJpaRepository.kt$TripJpaRepository : JpaRepository</ID>
+    <ID>UndocumentedPublicClass:TripMapper.kt$TripMapper</ID>
+    <ID>UndocumentedPublicClass:TripRepositoryAdapter.kt$TripRepositoryAdapter : TripRepository</ID>
+    <ID>UndocumentedPublicClass:VehicleEntity.kt$VehicleEntity</ID>
+    <ID>UndocumentedPublicClass:VehicleJpaRepository.kt$VehicleJpaRepository : JpaRepository</ID>
+    <ID>UndocumentedPublicClass:VehicleMapper.kt$VehicleMapper</ID>
+    <ID>UndocumentedPublicClass:VehicleRepositoryAdapter.kt$VehicleRepositoryAdapter : VehicleRepository</ID>
+    <ID>UndocumentedPublicClass:VisitEntity.kt$VisitEntity</ID>
+    <ID>UndocumentedPublicClass:VrpApplication.kt$VrpApplication</ID>
+    <ID>UndocumentedPublicClass:VrpJobEntity.kt$VrpJobEntity</ID>
+    <ID>UndocumentedPublicClass:VrpJobJpaRepository.kt$VrpJobJpaRepository : JpaRepository</ID>
+    <ID>UndocumentedPublicClass:VrpJobMapper.kt$VrpJobMapper</ID>
+    <ID>UndocumentedPublicClass:VrpJobRepositoryAdapter.kt$VrpJobRepositoryAdapter : VrpJobRepository</ID>
+    <ID>UndocumentedPublicClass:VrpOrchestrationAdapter.kt$VrpOrchestrationAdapter : VrpOrchestrationPort</ID>
+    <ID>UndocumentedPublicClass:VrpRuntimeHints.kt$VrpRuntimeHintsConfiguration</ID>
+    <ID>UndocumentedPublicClass:VrpSolveWorkflow.kt$VrpJobInput</ID>
+    <ID>UndocumentedPublicClass:VrpSolveWorkflow.kt$VrpJobResult</ID>
+    <ID>UndocumentedPublicFunction:Activities.kt$FetchOrdersActivity$fun fetchOrders( organizationId: UUID, orderIds: List&lt;UUID&gt; ): List&lt;Order&gt;</ID>
+    <ID>UndocumentedPublicFunction:Activities.kt$FetchVehiclesActivity$fun fetchVehicles( organizationId: UUID, vehicleIds: List&lt;UUID&gt; ): List&lt;com.vrp.domain.model.Vehicle&gt;</ID>
+    <ID>UndocumentedPublicFunction:Activities.kt$PersistSolutionActivity$fun persist( jobId: UUID, organizationId: UUID, result: SolverResult )</ID>
+    <ID>UndocumentedPublicFunction:Activities.kt$RunSolverActivity$fun runSolver( jobId: UUID, organizationId: UUID, orders: List&lt;Order&gt;, vehicles: List&lt;com.vrp.domain.model.Vehicle&gt; ): SolverResult</ID>
+    <ID>UndocumentedPublicFunction:ApiDtoMapper.kt$ApiDtoMapper$fun toJobResponse(job: VrpJob): JobResponse</ID>
+    <ID>UndocumentedPublicFunction:ApiDtoMapper.kt$ApiDtoMapper$fun toTripResponse(trip: Trip): TripResponse</ID>
+    <ID>UndocumentedPublicFunction:GetJobStatusUseCase.kt$GetJobStatusUseCase$@Cacheable(value = ["jobStatus"], key = "#jobId + '-' + #organizationId") fun execute( jobId: UUID, organizationId: UUID ): VrpJob?</ID>
+    <ID>UndocumentedPublicFunction:GetTripUseCase.kt$GetTripUseCase$fun execute( tripId: UUID, organizationId: UUID ): Trip?</ID>
+    <ID>UndocumentedPublicFunction:GetTripUseCase.kt$GetTripUseCase$fun getByJobId( jobId: UUID, organizationId: UUID ): List&lt;Trip&gt;</ID>
+    <ID>UndocumentedPublicFunction:JobController.kt$JobController$@GetMapping("/{id}") fun getJobStatus( @PathVariable id: UUID, authentication: Authentication ): ResponseEntity&lt;JobResponse&gt;</ID>
+    <ID>UndocumentedPublicFunction:JobController.kt$JobController$@PostMapping fun submitJob( @RequestBody request: SubmitJobRequest, authentication: Authentication ): ResponseEntity&lt;JobResponse&gt;</ID>
+    <ID>UndocumentedPublicFunction:JwtOrgIdExtractor.kt$JwtOrgIdExtractor$fun extractOrganizationId(authentication: Authentication): UUID</ID>
+    <ID>UndocumentedPublicFunction:OrderJpaRepository.kt$OrderJpaRepository$fun deleteByIdAndOrganizationId( id: UUID, organizationId: UUID )</ID>
+    <ID>UndocumentedPublicFunction:OrderJpaRepository.kt$OrderJpaRepository$fun findAllByIdInAndOrganizationId( ids: List&lt;UUID&gt;, organizationId: UUID ): List&lt;OrderEntity&gt;</ID>
+    <ID>UndocumentedPublicFunction:OrderJpaRepository.kt$OrderJpaRepository$fun findAllByOrganizationId(organizationId: UUID): List&lt;OrderEntity&gt;</ID>
+    <ID>UndocumentedPublicFunction:OrderJpaRepository.kt$OrderJpaRepository$fun findByIdAndOrganizationId( id: UUID, organizationId: UUID ): OrderEntity?</ID>
+    <ID>UndocumentedPublicFunction:OrderMapper.kt$OrderMapper$fun toDomain(entity: OrderEntity): Order</ID>
+    <ID>UndocumentedPublicFunction:OrderMapper.kt$OrderMapper$fun toEntity(domain: Order): OrderEntity</ID>
+    <ID>UndocumentedPublicFunction:OrderRepository.kt$OrderRepository$fun deleteById( id: UUID, organizationId: UUID )</ID>
+    <ID>UndocumentedPublicFunction:OrderRepository.kt$OrderRepository$fun findAllByIds( ids: List&lt;UUID&gt;, organizationId: UUID ): List&lt;Order&gt;</ID>
+    <ID>UndocumentedPublicFunction:OrderRepository.kt$OrderRepository$fun findAllByOrganizationId(organizationId: UUID): List&lt;Order&gt;</ID>
+    <ID>UndocumentedPublicFunction:OrderRepository.kt$OrderRepository$fun findById( id: UUID, organizationId: UUID ): Order?</ID>
+    <ID>UndocumentedPublicFunction:OrderRepository.kt$OrderRepository$fun save(order: Order): Order</ID>
+    <ID>UndocumentedPublicFunction:RedisConfig.kt$RedisConfig$@Bean fun cacheManager(connectionFactory: RedisConnectionFactory): RedisCacheManager</ID>
+    <ID>UndocumentedPublicFunction:RedisConfig.kt$RedisConfig$@Bean fun redisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate&lt;String, Any&gt;</ID>
+    <ID>UndocumentedPublicFunction:SecurityConfig.kt$SecurityConfig$@Bean fun securityFilterChain(http: HttpSecurity): SecurityFilterChain</ID>
+    <ID>UndocumentedPublicFunction:TemporalConfig.kt$TemporalConfig$@Bean fun taskQueue(): String</ID>
+    <ID>UndocumentedPublicFunction:TemporalConfig.kt$TemporalConfig$@Bean fun worker(workerFactory: WorkerFactory): Worker</ID>
+    <ID>UndocumentedPublicFunction:TemporalConfig.kt$TemporalConfig$@Bean fun workerFactory(workflowClient: WorkflowClient): WorkerFactory</ID>
+    <ID>UndocumentedPublicFunction:TemporalConfig.kt$TemporalConfig$@Bean fun workflowClient(serviceStubs: WorkflowServiceStubs): WorkflowClient</ID>
+    <ID>UndocumentedPublicFunction:TemporalConfig.kt$TemporalConfig$@Bean fun workflowServiceStubs(): WorkflowServiceStubs</ID>
+    <ID>UndocumentedPublicFunction:TripController.kt$TripController$@GetMapping fun getTripsByJob( @RequestParam jobId: UUID, authentication: Authentication ): ResponseEntity&lt;List&lt;TripResponse&gt;&gt;</ID>
+    <ID>UndocumentedPublicFunction:TripController.kt$TripController$@GetMapping("/{id}") fun getTrip( @PathVariable id: UUID, authentication: Authentication ): ResponseEntity&lt;TripResponse&gt;</ID>
+    <ID>UndocumentedPublicFunction:TripJpaRepository.kt$TripJpaRepository$fun findAllByJobIdAndOrganizationId( jobId: UUID, organizationId: UUID ): List&lt;TripEntity&gt;</ID>
+    <ID>UndocumentedPublicFunction:TripJpaRepository.kt$TripJpaRepository$fun findAllByOrganizationId(organizationId: UUID): List&lt;TripEntity&gt;</ID>
+    <ID>UndocumentedPublicFunction:TripJpaRepository.kt$TripJpaRepository$fun findByIdAndOrganizationId( id: UUID, organizationId: UUID ): TripEntity?</ID>
+    <ID>UndocumentedPublicFunction:TripMapper.kt$TripMapper$fun toDomain(entity: TripEntity): Trip</ID>
+    <ID>UndocumentedPublicFunction:TripMapper.kt$TripMapper$fun toEntity(domain: Trip): TripEntity</ID>
+    <ID>UndocumentedPublicFunction:TripRepository.kt$TripRepository$fun findAllByJobId( jobId: UUID, organizationId: UUID ): List&lt;Trip&gt;</ID>
+    <ID>UndocumentedPublicFunction:TripRepository.kt$TripRepository$fun findAllByOrganizationId(organizationId: UUID): List&lt;Trip&gt;</ID>
+    <ID>UndocumentedPublicFunction:TripRepository.kt$TripRepository$fun findById( id: UUID, organizationId: UUID ): Trip?</ID>
+    <ID>UndocumentedPublicFunction:TripRepository.kt$TripRepository$fun save(trip: Trip): Trip</ID>
+    <ID>UndocumentedPublicFunction:TripRepository.kt$TripRepository$fun saveAll(trips: List&lt;Trip&gt;): List&lt;Trip&gt;</ID>
+    <ID>UndocumentedPublicFunction:VehicleJpaRepository.kt$VehicleJpaRepository$fun deleteByIdAndOrganizationId( id: UUID, organizationId: UUID )</ID>
+    <ID>UndocumentedPublicFunction:VehicleJpaRepository.kt$VehicleJpaRepository$fun findAllByIdInAndOrganizationId( ids: List&lt;UUID&gt;, organizationId: UUID ): List&lt;VehicleEntity&gt;</ID>
+    <ID>UndocumentedPublicFunction:VehicleJpaRepository.kt$VehicleJpaRepository$fun findAllByOrganizationId(organizationId: UUID): List&lt;VehicleEntity&gt;</ID>
+    <ID>UndocumentedPublicFunction:VehicleJpaRepository.kt$VehicleJpaRepository$fun findByIdAndOrganizationId( id: UUID, organizationId: UUID ): VehicleEntity?</ID>
+    <ID>UndocumentedPublicFunction:VehicleMapper.kt$VehicleMapper$fun toDomain(entity: VehicleEntity): Vehicle</ID>
+    <ID>UndocumentedPublicFunction:VehicleMapper.kt$VehicleMapper$fun toEntity(domain: Vehicle): VehicleEntity</ID>
+    <ID>UndocumentedPublicFunction:VehicleRepository.kt$VehicleRepository$fun deleteById( id: UUID, organizationId: UUID )</ID>
+    <ID>UndocumentedPublicFunction:VehicleRepository.kt$VehicleRepository$fun findAllByIds( ids: List&lt;UUID&gt;, organizationId: UUID ): List&lt;Vehicle&gt;</ID>
+    <ID>UndocumentedPublicFunction:VehicleRepository.kt$VehicleRepository$fun findAllByOrganizationId(organizationId: UUID): List&lt;Vehicle&gt;</ID>
+    <ID>UndocumentedPublicFunction:VehicleRepository.kt$VehicleRepository$fun findById( id: UUID, organizationId: UUID ): Vehicle?</ID>
+    <ID>UndocumentedPublicFunction:VehicleRepository.kt$VehicleRepository$fun save(vehicle: Vehicle): Vehicle</ID>
+    <ID>UndocumentedPublicFunction:VrpApplication.kt$fun main(args: Array&lt;String&gt;)</ID>
+    <ID>UndocumentedPublicFunction:VrpJobJpaRepository.kt$VrpJobJpaRepository$fun findAllByOrganizationId(organizationId: UUID): List&lt;VrpJobEntity&gt;</ID>
+    <ID>UndocumentedPublicFunction:VrpJobJpaRepository.kt$VrpJobJpaRepository$fun findAllByOrganizationIdAndStatus( organizationId: UUID, status: JobStatus ): List&lt;VrpJobEntity&gt;</ID>
+    <ID>UndocumentedPublicFunction:VrpJobJpaRepository.kt$VrpJobJpaRepository$fun findByIdAndOrganizationId( id: UUID, organizationId: UUID ): VrpJobEntity?</ID>
+    <ID>UndocumentedPublicFunction:VrpJobMapper.kt$VrpJobMapper$fun toDomain(entity: VrpJobEntity): VrpJob</ID>
+    <ID>UndocumentedPublicFunction:VrpJobMapper.kt$VrpJobMapper$fun toEntity(domain: VrpJob): VrpJobEntity</ID>
+    <ID>UndocumentedPublicFunction:VrpJobRepository.kt$VrpJobRepository$fun findAllByOrganizationId(organizationId: UUID): List&lt;VrpJob&gt;</ID>
+    <ID>UndocumentedPublicFunction:VrpJobRepository.kt$VrpJobRepository$fun findById( id: UUID, organizationId: UUID ): VrpJob?</ID>
+    <ID>UndocumentedPublicFunction:VrpJobRepository.kt$VrpJobRepository$fun save(job: VrpJob): VrpJob</ID>
+    <ID>UndocumentedPublicFunction:VrpJobRepository.kt$VrpJobRepository$fun updateStatus( id: UUID, status: JobStatus, organizationId: UUID ): VrpJob?</ID>
+    <ID>UndocumentedPublicFunction:VrpJobRepository.kt$VrpJobRepository$fun updateWithScore( id: UUID, status: JobStatus, hardScore: Int, softScore: Int, organizationId: UUID ): VrpJob?</ID>
+    <ID>UndocumentedPublicFunction:VrpMetrics.kt$VrpMetrics$fun recordJobCompleted( organizationId: UUID, success: Boolean )</ID>
+    <ID>UndocumentedPublicFunction:VrpMetrics.kt$VrpMetrics$fun recordJobSubmitted(organizationId: UUID)</ID>
+    <ID>UndocumentedPublicFunction:VrpMetrics.kt$VrpMetrics$fun recordSolverDuration( organizationId: UUID, durationMillis: Long )</ID>
+    <ID>UndocumentedPublicFunction:VrpMetrics.kt$VrpMetrics$fun recordSolverScore( organizationId: UUID, hardScore: Int, softScore: Int )</ID>
+    <ID>UndocumentedPublicFunction:VrpSolveWorkflow.kt$VrpSolveWorkflow$@QueryMethod fun getStatus(): String</ID>
+    <ID>UndocumentedPublicFunction:VrpSolveWorkflow.kt$VrpSolveWorkflow$@WorkflowMethod fun solve(input: VrpJobInput): VrpJobResult</ID>
+    <ID>UnnecessaryParentheses:VrpConstraintProvider.kt$VrpConstraintProvider$(totalWeight / vehicle.weightCapacity)</ID>
+    <ID>UnnecessaryParentheses:VrpConstraintProviderTest.kt$VrpConstraintProviderTest$(totalWeight / vehicle.weightCapacity)</ID>
+    <ID>UnusedPrivateProperty:GetJobStatusUseCaseTest.kt$GetJobStatusUseCaseTest$val org1 = UUID.randomUUID()</ID>
+    <ID>UseCheckOrError:ActivityImpls.kt$RunSolverActivityImpl$throw IllegalStateException("No score calculated")</ID>
+    <ID>UseCheckOrError:ActivityImpls.kt$RunSolverActivityImpl$throw IllegalStateException("No solution found")</ID>
+    <ID>WildcardImport:ActivityImpls.kt$import com.vrp.infrastructure.temporal.activity.*</ID>
+    <ID>WildcardImport:ActivityImplsTest.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:ActivityImplsTest.kt$import io.mockk.*</ID>
+    <ID>WildcardImport:ApiDtoMapper.kt$import com.vrp.api.dto.*</ID>
+    <ID>WildcardImport:AuditLogEntity.kt$import jakarta.persistence.*</ID>
+    <ID>WildcardImport:EuclideanDistanceCalculator.kt$import kotlin.math.*</ID>
+    <ID>WildcardImport:JobController.kt$import org.springframework.web.bind.annotation.*</ID>
+    <ID>WildcardImport:LineItemEntity.kt$import jakarta.persistence.*</ID>
+    <ID>WildcardImport:OrderEntity.kt$import jakarta.persistence.*</ID>
+    <ID>WildcardImport:OrderMapper.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:OrderMapperTest.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:OrderRepositoryAdapterTest.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:OrderRepositoryAdapterTest.kt$import io.mockk.*</ID>
+    <ID>WildcardImport:SolverDomainMapper.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:SolverDomainMapperTest.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:TripController.kt$import org.springframework.web.bind.annotation.*</ID>
+    <ID>WildcardImport:TripEntity.kt$import jakarta.persistence.*</ID>
+    <ID>WildcardImport:TripRepositoryAdapterTest.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:TripRepositoryAdapterTest.kt$import io.mockk.*</ID>
+    <ID>WildcardImport:VehicleEntity.kt$import jakarta.persistence.*</ID>
+    <ID>WildcardImport:VehicleRepositoryAdapterTest.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:VehicleRepositoryAdapterTest.kt$import io.mockk.*</ID>
+    <ID>WildcardImport:VisitEntity.kt$import jakarta.persistence.*</ID>
+    <ID>WildcardImport:VrpJobEntity.kt$import jakarta.persistence.*</ID>
+    <ID>WildcardImport:VrpJobRepositoryAdapterTest.kt$import com.vrp.domain.model.*</ID>
+    <ID>WildcardImport:VrpJobRepositoryAdapterTest.kt$import io.mockk.*</ID>
+    <ID>WildcardImport:VrpOrchestrationAdapterTest.kt$import io.mockk.*</ID>
+    <ID>WildcardImport:VrpSolveWorkflowImpl.kt$import com.vrp.infrastructure.temporal.activity.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

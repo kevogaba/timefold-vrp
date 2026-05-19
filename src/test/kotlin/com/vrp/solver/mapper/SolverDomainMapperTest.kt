@@ -1,6 +1,10 @@
 package com.vrp.solver.mapper
 
-import com.vrp.domain.model.*
+import com.vrp.domain.model.Customer
+import com.vrp.domain.model.LineItem
+import com.vrp.domain.model.Location
+import com.vrp.domain.model.Order
+import com.vrp.domain.model.Vehicle
 import com.vrp.solver.distance.EuclideanDistanceCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

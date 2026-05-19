@@ -16,6 +16,9 @@ import java.time.temporal.ChronoUnit
  */
 class VrpConstraintProvider : ConstraintProvider {
     private val distanceCalculator = EuclideanDistanceCalculator()
+    private companion object {
+        private const val TARGET_UTILIZATION_PERCENT = 80
+    }
 
     override fun defineConstraints(constraintFactory: ConstraintFactory): Array<Constraint> =
         arrayOf(
@@ -119,7 +122,7 @@ class VrpConstraintProvider : ConstraintProvider {
                         0
                     }
                 // Penalize deviation from 80% utilization (optimal target)
-                Math.abs(utilizationPercent - 80).toLong()
+                Math.abs(utilizationPercent - TARGET_UTILIZATION_PERCENT).toLong()
             }.asConstraint("balanceLoad")
 
     /**

@@ -1,7 +1,12 @@
 package com.vrp.solver.distance
 
 import com.vrp.domain.model.Location
-import kotlin.math.*
+import kotlin.math.asin
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.roundToLong
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /**
  * Euclidean (Haversine) distance calculator using great-circle distance formula.

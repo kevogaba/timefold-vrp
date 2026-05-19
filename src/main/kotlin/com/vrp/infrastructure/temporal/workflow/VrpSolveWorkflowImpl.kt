@@ -1,8 +1,12 @@
 package com.vrp.infrastructure.temporal.workflow
 
-import com.vrp.infrastructure.temporal.activity.*
+import com.vrp.infrastructure.temporal.activity.FetchOrdersActivity
+import com.vrp.infrastructure.temporal.activity.FetchVehiclesActivity
+import com.vrp.infrastructure.temporal.activity.PersistSolutionActivity
+import com.vrp.infrastructure.temporal.activity.RunSolverActivity
 import io.temporal.activity.ActivityOptions
 import io.temporal.common.RetryOptions
+import io.temporal.failure.TemporalFailure
 import io.temporal.workflow.Workflow
 import java.time.Duration
 
@@ -69,7 +73,16 @@ class VrpSolveWorkflowImpl : VrpSolveWorkflow {
                 softScore = solverResult.softScore,
                 errorMessage = null
             )
-        } catch (e: Exception) {
+        } catch (e: TemporalFailure) {
+            currentStatus = "FAILED"
+            VrpJobResult(
+                jobId = input.jobId,
+                success = false,
+                hardScore = null,
+                softScore = null,
+                errorMessage = e.cause?.message ?: e.message
+            )
+        } catch (e: IllegalStateException) {
             currentStatus = "FAILED"
             VrpJobResult(
                 jobId = input.jobId,

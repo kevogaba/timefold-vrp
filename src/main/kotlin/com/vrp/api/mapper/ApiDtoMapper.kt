@@ -1,6 +1,9 @@
 package com.vrp.api.mapper
 
-import com.vrp.api.dto.*
+import com.vrp.api.dto.JobResponse
+import com.vrp.api.dto.LocationDto
+import com.vrp.api.dto.TripResponse
+import com.vrp.api.dto.VisitResponse
 import com.vrp.domain.model.Trip
 import com.vrp.domain.model.VrpJob
 import org.springframework.stereotype.Component

@@ -1,6 +1,9 @@
 package com.vrp.solver.mapper
 
-import com.vrp.domain.model.*
+import com.vrp.domain.model.Order
+import com.vrp.domain.model.Trip
+import com.vrp.domain.model.Vehicle
+import com.vrp.domain.model.Visit
 import com.vrp.solver.distance.DistanceCalculator
 import com.vrp.solver.domain.SolverVehicle
 import com.vrp.solver.domain.SolverVisit

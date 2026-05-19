@@ -1,16 +1,23 @@
 package com.vrp.infrastructure.temporal.activity.impl
 
+import ai.timefold.solver.core.api.solver.SolverStatus
 import com.vrp.domain.model.Order
 import com.vrp.domain.model.Vehicle
 import com.vrp.domain.port.OrderRepository
 import com.vrp.domain.port.TripRepository
 import com.vrp.domain.port.VehicleRepository
-import com.vrp.infrastructure.temporal.activity.*
+import com.vrp.infrastructure.temporal.activity.FetchOrdersActivity
+import com.vrp.infrastructure.temporal.activity.FetchVehiclesActivity
+import com.vrp.infrastructure.temporal.activity.PersistSolutionActivity
+import com.vrp.infrastructure.temporal.activity.RunSolverActivity
+import com.vrp.infrastructure.temporal.activity.SolverResult
 import com.vrp.solver.distance.EuclideanDistanceCalculator
 import com.vrp.solver.mapper.SolverDomainMapper
 import com.vrp.solver.service.VrpSolverService
 import org.springframework.stereotype.Component
 import java.util.UUID
+
+private const val SOLVER_POLL_INTERVAL_MS = 1_000L
 
 @Component
 class FetchOrdersActivityImpl(
@@ -52,8 +59,8 @@ class RunSolverActivityImpl(
         solverService.solve(jobId, problem)
 
         // Poll for completion
-        while (solverService.getSolverStatus(jobId) != ai.timefold.solver.core.api.solver.SolverStatus.NOT_SOLVING) {
-            Thread.sleep(1000)
+        while (solverService.getSolverStatus(jobId) != SolverStatus.NOT_SOLVING) {
+            Thread.sleep(SOLVER_POLL_INTERVAL_MS)
         }
 
         // Get final solution

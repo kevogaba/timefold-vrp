@@ -1,6 +1,9 @@
 package com.vrp.infrastructure.persistence.mapper
 
-import com.vrp.domain.model.*
+import com.vrp.domain.model.Customer
+import com.vrp.domain.model.LineItem
+import com.vrp.domain.model.Location
+import com.vrp.domain.model.Order
 import com.vrp.infrastructure.persistence.entity.LineItemEntity
 import com.vrp.infrastructure.persistence.entity.OrderEntity
 import org.assertj.core.api.Assertions.assertThat

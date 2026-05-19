@@ -5,7 +5,10 @@ import com.vrp.domain.port.VrpOrchestrationPort
 import com.vrp.infrastructure.temporal.workflow.VrpJobInput
 import com.vrp.infrastructure.temporal.workflow.VrpSolveWorkflow
 import io.temporal.client.WorkflowClient
+import io.temporal.client.WorkflowNotFoundException
 import io.temporal.client.WorkflowOptions
+import io.temporal.client.WorkflowQueryException
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.Duration
@@ -16,6 +19,8 @@ class VrpOrchestrationAdapter(
     @Value("\${temporal.task-queue:vrp-task-queue}")
     private val taskQueue: String
 ) : VrpOrchestrationPort {
+    private val logger = LoggerFactory.getLogger(VrpOrchestrationAdapter::class.java)
+
     override fun startSolveWorkflow(job: VrpJob): String {
         val workflowId = "vrp-solve-${job.id}"
 
@@ -46,7 +51,11 @@ class VrpOrchestrationAdapter(
         try {
             val workflow = workflowClient.newWorkflowStub(VrpSolveWorkflow::class.java, workflowId)
             workflow.getStatus()
-        } catch (e: Exception) {
+        } catch (e: WorkflowNotFoundException) {
+            logger.debug("Workflow not found for id={}", workflowId, e)
+            null
+        } catch (e: WorkflowQueryException) {
+            logger.debug("Failed to query workflow status for id={}", workflowId, e)
             null
         }
 

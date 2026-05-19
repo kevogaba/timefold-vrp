@@ -1,7 +1,12 @@
 package com.vrp.infrastructure.temporal.adapter
 
 import com.vrp.infrastructure.temporal.workflow.VrpSolveWorkflow
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.verify
+import io.temporal.client.WorkflowNotFoundException
 import io.temporal.client.WorkflowClient
 import io.temporal.client.WorkflowStub
 import org.assertj.core.api.Assertions.assertThat
@@ -40,7 +45,7 @@ class VrpOrchestrationAdapterTest {
         val workflowId = "vrp-solve-${UUID.randomUUID()}"
 
         every { workflowClient.newWorkflowStub(VrpSolveWorkflow::class.java, workflowId) } throws
-            RuntimeException("Workflow not found")
+            WorkflowNotFoundException(workflowId, "runId")
 
         val status = adapter.queryWorkflowStatus(workflowId)
 
