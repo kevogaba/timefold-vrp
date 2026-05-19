@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.graalvm.native)
     alias(libs.plugins.ktlint)
-    id("io.gitlab.arturbosch.detekt") version "2.0.0-alpha.3"
+    alias(libs.plugins.detekt)
     kotlin("plugin.allopen") version "2.3.21"
 }
 
@@ -100,7 +100,7 @@ dependencies {
     implementation(libs.logback.encoder)
 
     // Detekt plugins
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:2.0.0-alpha.3")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${libs.versions.detekt.get()}")
 
     // Testing
     testImplementation(libs.spring.boot.starter.test)
