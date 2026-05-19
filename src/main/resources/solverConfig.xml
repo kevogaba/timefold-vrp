@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver xmlns="https://timefold.ai/xsd/solver" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://timefold.ai/xsd/solver https://timefold.ai/xsd/solver/solver.xsd">
+
+    <solutionClass>com.vrp.solver.domain.VrpSolution</solutionClass>
+    <entityClass>com.vrp.solver.domain.SolverVehicle</entityClass>
+
+    <scoreDirectorFactory>
+        <constraintProviderClass>com.vrp.solver.constraints.VrpConstraintProvider</constraintProviderClass>
+    </scoreDirectorFactory>
+
+    <termination>
+        <minutesSpentLimit>5</minutesSpentLimit>
+    </termination>
+
+</solver>

@@ -1,0 +1,105 @@
+[versions]
+java = "25"
+kotlin = "2.3.21"
+spring-boot = "4.0.6"
+spring-dependency-management = "1.1.7"
+timefold-solver = "2.0.0"
+temporal-sdk = "1.34.0"
+spring-modulith = "2.0.6"
+sentry = "8.27.0"
+springdoc-openapi = "3.0.2"
+spring-cloud = "2025.1.1"
+spring-cloud-contract = "5.0.2"
+kover = "0.9.1"
+graalvm-native = "0.10.4"
+jackson = "3.0.0"
+logback = "1.5.32"
+testcontainers = "1.20.4"
+redis = "8.0.0"
+uuid-creator = "6.0.0"
+detekt = "2.0.0-alpha.3"
+ktlint-gradle = "12.1.2"
+
+[libraries]
+# Spring Boot
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring-boot" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "spring-boot" }
+spring-boot-starter-oauth2-resource-server = { module = "org.springframework.boot:spring-boot-starter-oauth2-resource-server", version.ref = "spring-boot" }
+spring-boot-starter-cache = { module = "org.springframework.boot:spring-boot-starter-cache", version.ref = "spring-boot" }
+spring-boot-starter-data-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis", version.ref = "spring-boot" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "spring-boot" }
+spring-boot-starter-opentelemetry = { module = "org.springframework.boot:spring-boot-starter-opentelemetry", version.ref = "spring-boot" }
+spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools", version.ref = "spring-boot" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
+
+# Kotlin
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
+
+# Jackson (Spring Boot 4 / Jackson 3)
+jackson-module-kotlin = { module = "tools.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+
+# Timefold Solver
+timefold-solver-core = { module = "ai.timefold.solver:timefold-solver-core", version.ref = "timefold-solver" }
+timefold-solver-spring-boot-starter = { module = "ai.timefold.solver:timefold-solver-spring-boot-starter", version.ref = "timefold-solver" }
+timefold-solver-test = { module = "ai.timefold.solver:timefold-solver-test", version.ref = "timefold-solver" }
+
+# Temporal
+temporal-spring-boot-starter = { module = "io.temporal:temporal-spring-boot-starter", version.ref = "temporal-sdk" }
+temporal-sdk = { module = "io.temporal:temporal-sdk", version.ref = "temporal-sdk" }
+temporal-testing = { module = "io.temporal:temporal-testing", version.ref = "temporal-sdk" }
+
+# Spring Modulith
+spring-modulith-starter-core = { module = "org.springframework.modulith:spring-modulith-starter-core", version.ref = "spring-modulith" }
+spring-modulith-starter-jpa = { module = "org.springframework.modulith:spring-modulith-starter-jpa", version.ref = "spring-modulith" }
+spring-modulith-events-api = { module = "org.springframework.modulith:spring-modulith-events-api", version.ref = "spring-modulith" }
+spring-modulith-starter-test = { module = "org.springframework.modulith:spring-modulith-starter-test", version.ref = "spring-modulith" }
+
+# Sentry
+sentry-spring-boot-starter = { module = "io.sentry:sentry-spring-boot-4-starter", version.ref = "sentry" }
+sentry-logback = { module = "io.sentry:sentry-logback", version.ref = "sentry" }
+
+# Springdoc OpenAPI
+springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc-openapi" }
+
+# Spring Cloud
+spring-cloud-dependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud" }
+
+# Spring Cloud Contract
+spring-cloud-starter-contract-verifier = { module = "org.springframework.cloud:spring-cloud-starter-contract-verifier" }
+
+# Database
+postgresql = { module = "org.postgresql:postgresql", version = "42.7.8" }
+flyway-core = { module = "org.flywaydb:flyway-core", version = "11.1.0" }
+flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version = "11.1.0" }
+
+# Redis
+redis-client = { module = "io.lettuce:lettuce-core", version.ref = "redis" }
+
+# UUID v7
+uuid-creator = { module = "com.github.f4b6a3:uuid-creator", version.ref = "uuid-creator" }
+
+# Logging
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+logback-encoder = { module = "net.logstash.logback:logstash-logback-encoder", version = "8.0" }
+
+# Testing
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
+mockk = { module = "io.mockk:mockk", version = "1.13.14" }
+assertj-core = { module = "org.assertj:assertj-core", version = "3.27.7" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+spring-cloud-contract = { id = "org.springframework.cloud.contract", version.ref = "spring-cloud-contract" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-native" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }

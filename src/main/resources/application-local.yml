@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vrp
+    username: vrp_user
+    password: vrp_password
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/vrp
+          jwk-set-uri: http://localhost:8080/realms/vrp/protocol/openid-connect/certs
+
+temporal:
+  target: localhost:7233
+  namespace: default
+
+management:
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+    metrics:
+      endpoint: http://localhost:4318/v1/metrics
+
+sentry:
+  dsn: ""
+  environment: local
+
+logging:
+  level:
+    com.vrp: DEBUG
